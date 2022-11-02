@@ -1,0 +1,47 @@
+<div class="about-zuozhe">
+    <div class="zuozhe">
+        {{ with .Site.Author.image }}
+            <div class="datou">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="{{ . }}" alt="">
+            </div>
+        {{ end }}
+        <div class="name-jianjie">
+            <div class="name">{{ .Site.Author.name }}</div>
+            <div class="jianjie">
+                {{ .Site.Author.description }}
+            </div>
+        </div>
+    </div>
+
+    <div class="type">
+        <a href='{{ add "/" (add .Lang "/posts") }}' class="wenzhang">
+            <p>
+                {{ if eq .Lang "en" }}
+                    {{ i18n "postsUnit" (len .Site.RegularPages) }}
+                {{ else }}
+                    {{ i18n "posts" (len .Site.RegularPages) }}
+                {{ end }}
+            </p>
+            <p>{{ len .Site.RegularPages }}</p>
+        </a>
+        <a href='{{ add "/" (add .Lang "/categories") }}' class="fenlei">
+            <p>{{ i18n "categoriesUnit" (len .Site.Taxonomies.categories) }}</p>
+            <p>{{ len .Site.Taxonomies.categories }}</p>
+        </a>
+        <a href='{{ add "/" (add .Lang "/tags") }}' class="biaoqian">
+            <p>{{ i18n "tagsUnit" (len .Site.Taxonomies.tags) }}</p>
+            <p>{{ len .Site.Taxonomies.tags }}</p>
+        </a>
+    </div>
+
+    <a href="{{ .Site.Author.link }}">
+        <div class="follow">Follow Me</div>
+    </a>
+    <div class="link">
+        {{ range .Site.Menus.social }}
+        <a href="{{ .URL }}" class="link-item is-hidden-desktop" title="{{ .Name }}">
+            <span class="icon">{{ .Pre }}</span>
+        </a>
+        {{ end }}
+    </div>
+</div>

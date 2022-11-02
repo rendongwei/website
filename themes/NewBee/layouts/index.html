@@ -1,0 +1,28 @@
+{{ define "main" }}
+{{ partial "widgets/hero.html" . }}
+<div class="zhuti-0">
+    <div class="container">
+        <div class="zhuti">
+            <div class="zhuti-l zhuti-l-home">
+                <div class="zuixin">
+                    <div class="xian-l"></div>
+                    <h3>
+                        {{ i18n "latestPosts" }}
+                    </h3>
+                    <div class="xian-r"></div>
+                </div>
+                <div class="terms-row">
+                    {{ range first .Site.Params.page.maxHomePostCount .Site.RegularPages }}
+                    <div class="terms-root">
+                        {{ partial "widgets/post-card.html" . }}
+                    </div>
+                    {{ end }}
+                </div>
+                <div class="more-posts">
+                    <a href='{{ if .Site.IsMultiLingual }} {{ add (add "/" .Lang) "/posts" }} {{ else }} /posts {{ end }}' class="efct-button">{{ i18n "allPosts" }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ end }}
