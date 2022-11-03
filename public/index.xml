@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>NewBee</title>
+    <title>Don的小窝</title>
     <link>http://rendongwei.cn/</link>
-    <description>Recent content on NewBee</description>
+    <description>Recent content on Don的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 02 Nov 2022 11:29:04 +0800</lastBuildDate><atom:link href="http://rendongwei.cn/index.xml" rel="self" type="application/rss+xml" />
@@ -14,6 +14,24 @@
       
       <guid>http://rendongwei.cn/posts/first-post/</guid>
       <description>111111111111111111111111111</description>
+    </item>
+    
+    <item>
+      <title>Jenkins 编译安卓</title>
+      <link>http://rendongwei.cn/posts/jenkins%E7%BC%96%E8%AF%91%E5%AE%89%E5%8D%93/</link>
+      <pubDate>Wed, 26 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/jenkins%E7%BC%96%E8%AF%91%E5%AE%89%E5%8D%93/</guid>
+      <description>更新记录 时间 内容 2022-10-26 初稿 软件版本 soft Version Jenkins 2.346.2 SDK 3859397 JDK 1.8.0_151 一、配置编译环境 ①、SDK 1 2 3 4 5 6 7 8 9 10 11 ➜ cd /usr/local</description>
+    </item>
+    
+    <item>
+      <title>编写 helm chart</title>
+      <link>http://rendongwei.cn/posts/%E7%BC%96%E5%86%99helm-chart/</link>
+      <pubDate>Fri, 30 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/%E7%BC%96%E5%86%99helm-chart/</guid>
+      <description>更新记录 时间 内容 2022-09-30 初稿 2022-10-01 调整目录层级 &amp;amp; 修改调试部分 &amp;amp; 增加优化部分 软件版本 soft Version Helm v3.10.0 Kubernetes 1.24.4 一、Chart 介</description>
     </item>
     
   </channel>
