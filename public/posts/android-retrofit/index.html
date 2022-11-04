@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Don的小窝 | Android-Retrofit</title>
+    <meta name="description" content="前言 Retrofit 是一个 RESTful 的 HTTP 网络请求框架的封装，网络请求的工作本质上是 OkHttp 完成，而 Retrofit 仅负责 网络请求接口的封装 使用 ">
+    <link rel="canonical" href="http://rendongwei.cn/posts/android-retrofit/" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta property="og:title" content="Android-Retrofit" />
+<meta property="og:description" content="前言 Retrofit 是一个 RESTful 的 HTTP 网络请求框架的封装，网络请求的工作本质上是 OkHttp 完成，而 Retrofit 仅负责 网络请求接口的封装 使用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://rendongwei.cn/posts/android-retrofit/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-11-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-11-02T00:00:00+00:00" />
+
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Android-Retrofit"/>
+<meta name="twitter:description" content="前言 Retrofit 是一个 RESTful 的 HTTP 网络请求框架的封装，网络请求的工作本质上是 OkHttp 完成，而 Retrofit 仅负责 网络请求接口的封装 使用"/>
+
+    
+        
+    
+    <link rel="stylesheet" href='/css/style.css' />
+    <link rel="stylesheet" href='/css/search.css' />
+    <link rel="stylesheet" href='/css/list.css' />
+    <link rel="stylesheet" href='/css/terms.css' />
+    <link rel="stylesheet" href='/css/taxonomy.css' />
+    <link rel="stylesheet" href='/css/home.css' />
+    <link rel="stylesheet" href='/css/syntax.css' />
+    
+    <link rel="stylesheet" href='/css/shortcode.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href='/css/_custom.css' />
+    <style>
+         
+    </style>
+    
+    
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [["$", "$"]],
+      },
+      displayMath: [
+        ["$$", "$$"],
+        ["\[\[", "\]\]"],
+      ],
+      svg: {
+        fontCache: "global",
+      },
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  ></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="/js/lazysizes.min.js" async=""></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/yes.js"></script>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+</head><body style="font-family: ,'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;">
+        <div class="loading">
+            <div class="loading-bg"></div>
+            <div class="loading-long">
+                <div class="loading-short"></div>
+            </div>
+        </div>
+
+        <header>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/">
+                <span class="logo">Don的小窝</span>
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <a href="/">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-home'></i> 主页</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/posts">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-book'></i> 文章</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-folder-open'></i> 分类</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-tags'></i> 标签</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-info-circle'></i> 关于</div>
+                    </div>
+                </div>
+            </a>
+            
+            <div class="navbar-burger">
+                <div class="burger-btn"><span><i class="fa fa-navicon"></i></span></div>
+            </div>
+            
+            
+            
+            <div class="mode">
+                <span class="sun"><i class="fa fa-sun-o"></i></span>
+                <span class="moon"><i class="fa fa-moon-o"></i></span>
+            </div>
+            
+        </div>
+    </nav>
+    <div class="burger-items">
+        
+        <a href="/">
+            <div class="burger-item">
+                <i class='fa fa-home'></i> 主页
+            </div>
+        </a>
+        
+        <a href="/posts">
+            <div class="burger-item">
+                <i class='fa fa-book'></i> 文章
+            </div>
+        </a>
+        
+        <a href="/categories">
+            <div class="burger-item">
+                <i class='fa fa-folder-open'></i> 分类
+            </div>
+        </a>
+        
+        <a href="/tags">
+            <div class="burger-item">
+                <i class='fa fa-tags'></i> 标签
+            </div>
+        </a>
+        
+        <a href="/about">
+            <div class="burger-item">
+                <i class='fa fa-info-circle'></i> 关于
+            </div>
+        </a>
+        
+    </div>
+    <div class="header-rest"></div>
+</header>
+
+
+        <div id="content">
+
+
+
+
+
+
+
+
+    <div class="hero">
+        
+            <div class="hero-img">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/start.jpg" alt="">
+            </div>
+        
+        <div class="hero-content">
+            <div class="hero-title">Android-Retrofit</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> : 2022-11-2 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> : 2022-11-2 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        :
+                        
+                            <a href='
+                                /categories/android
+                            '>
+                                Android
+                            </a>
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> : 2039 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> : 5  &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-eye"></i> : <span id="busuanzi_value_page_pv"></span></span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<div class="zhuti-0">
+    <div class="container">
+        <div class="zhuti">
+            <div class="zhuti-l">
+                
+
+
+
+    
+
+
+<div class="content-root">
+    <div class="long">
+        <button class="tosides-1 text-wbd">
+            <i class="fa fa-arrow-right"></i>
+        </button>
+        <button class="tosides-2 text-wbd">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <button class="toup text-wbd">
+            <i class="fa fa-arrow-up"></i>
+        </button>
+    </div>
+    
+        <div class="content">
+            <div class="content-self">
+                <h2 id="前言">前言</h2>
+<p>Retrofit 是一个 RESTful 的 HTTP 网络请求框架的封装，网络请求的工作本质上是 OkHttp 完成，而 Retrofit 仅负责 网络请求接口的封装</p>
+<h2 id="使用步骤">使用步骤</h2>
+<h3 id="1添加retrofit库的依赖">1.添加Retrofit库的依赖：</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gradle" data-lang="gradle"><span class="line"><span class="cl"><span class="n">implementation</span> <span class="s1">&#39;com.squareup.retrofit2:retrofit:2.0.2&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">implementation</span> <span class="s1">&#39;com.squareup.retrofit2:converter-gson:2.0.2&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">implementation</span> <span class="s1">&#39;com.google.code.gson:gson:2.8.5&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">implementation</span> <span class="s1">&#39;com.squareup.retrofit2:adapter-rxjava:2.0.2&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>后面三个是可选的，分别是数据解析器和gson，以及rxjava支持的依赖</p>
+</blockquote>
+<h3 id="2创建用于描述网络请求的接口">2.创建用于描述网络请求的接口</h3>
+<p>Retrofit将 Http请求 抽象成 kotlin接口：采用 注解 描述网络请求参数 和配置网络请求参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">interface</span> <span class="nc">ApiSerivce</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@GET</span><span class="p">(</span><span class="s2">&#34;/api/call&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">getCall</span><span class="p">(</span><span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">)</span> <span class="n">name</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3创建retrofit实例">3.创建Retrofit实例</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">val</span> <span class="py">retrofit</span>  <span class="p">=</span> <span class="n">Retrofit</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">				<span class="p">.</span><span class="n">baseUrl</span><span class="p">(</span><span class="s2">&#34;http://api.xxx.com&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="p">.</span><span class="n">addConverterFactory</span><span class="p">(</span><span class="n">GsonConverterFactory</span><span class="p">.</span><span class="n">create</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">				<span class="p">.</span><span class="n">addCallAdapterFactory</span><span class="p">(</span><span class="n">RxJavaCallAdapterFactory</span><span class="p">.</span><span class="n">create</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">				<span class="p">.</span><span class="n">build</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4发送请求">4.发送请求</h3>
+<p>请求分为同步请求和异步请求</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">val</span> <span class="py">service</span> <span class="p">=</span> <span class="n">retrofit</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">ApiService</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">call</span> <span class="p">=</span> <span class="n">service</span><span class="p">.</span><span class="n">getCall</span><span class="p">(</span><span class="s2">&#34;张**&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 同步请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">try</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">val</span> <span class="py">response</span> <span class="p">:</span> <span class="n">Response</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">call</span><span class="p">.</span><span class="n">execute</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">val</span> <span class="py">reuslt</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">body</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">catch</span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="n">Exception</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 异步请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">call</span><span class="p">.</span><span class="n">enqueue</span><span class="p">(</span><span class="k">object</span> <span class="err">: </span><span class="nc">CallBack</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;{</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">onResponse</span><span class="p">(</span><span class="n">call</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span> <span class="p">,</span> <span class="n">response</span> <span class="p">:</span> <span class="n">Response</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">val</span> <span class="py">reuslt</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">body</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">onError</span><span class="p">(</span><span class="n">call</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span> <span class="p">,</span> <span class="n">throwable</span> <span class="p">:</span> <span class="n">Throwable</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">       
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>response.body()就是Reception对象，网络请求的完整 Url =在创建Retrofit实例时通过.baseUrl()设置 +网络请求接口的注解设置（下面称 “path“ ）
+整合的规则如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th>具体使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">path = 完整的Url</td>
+<td>Url = &ldquo;http://host:port/api/login&rdquo;  <br />path = &ldquo;http://host:port/api/login&rdquo;<br />baseUrl = 不设置</td>
+</tr>
+<tr>
+<td style="text-align:center">path = 绝对路径</td>
+<td>Url = &ldquo;http://host:port/api/login&rdquo;<br />path = &ldquo;/login&rdquo;<br />baseUrl = &ldquo;http://host:port/api/&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align:center">path = 相对路径<br />baseUrl = 目录形式</td>
+<td>Url = &ldquo;http://host:port/api/v1/login&rdquo; <br />path = &ldquo;login&rdquo;<br />baseUrl = &ldquo;http://host:port/api/v1&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align:center">path = 相对路径<br />baseUrl = 文件形式</td>
+<td>Url = &ldquo;http://host:port/api/v1/login&rdquo; <br />path = &ldquo;login&rdquo;<br />baseUrl = &ldquo;http://host:port/api/v1&rdquo;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="注解">注解</h3>
+<p>上面我们用了@GET注解来发送Get请求，Retrofit还提供了很多其他的注解类型</p>
+<h4 id="网络请求方法">网络请求方法</h4>
+<blockquote>
+<p>@GET 、 @POST 、 @PUT 、@DELETE 、@PATH 、@HEAD 、@OPTIONS 、@HTTP</p>
+</blockquote>
+<h4 id="标记类">标记类</h4>
+<blockquote>
+<p>@FormUrlEncoded 、@Multipart 、@Streaming</p>
+</blockquote>
+<h4 id="网络请求参数">网络请求参数</h4>
+<blockquote>
+<p>@Header 、@headers 、@URL 、@Body 、@Path 、@Field 、@FieldMap 、@Part 、@PartMap 、@Query 、@QueryMap</p>
+</blockquote>
+<h4 id="第一类--网络请求方法">第一类 : 网络请求方法</h4>
+<ol>
+<li>
+<p>@GET、@POST、@PUT、@DELETE、@HEAD分别对应 HTTP中的网络请求方式</p>
+</li>
+<li>
+<p>@HTTP替换@GET、@POST、@PUT、@DELETE、@HEAD注解的作用 及 更多功能拓展</p>
+</li>
+</ol>
+<p>具体使用：通过属性<code>method</code>、<code>path</code>、<code>hasBody</code>进行设置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">interface</span> <span class="nc">ApiService</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * method : 网络请求方法(区分大小写)
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * path : 网络请求地址路径
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * hasBody : 是否有请求体
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@HTTP</span><span class="p">(</span><span class="n">method</span> <span class="p">=</span> <span class="s2">&#34;GET&#34;</span> <span class="p">,</span> <span class="n">path</span> <span class="p">=</span> <span class="s2">&#34;blog/{id}&#34;</span> <span class="p">,</span> <span class="n">hasBody</span> <span class="p">=</span> <span class="k">false</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">getCall</span><span class="p">(</span><span class="nd">@Path</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)</span> <span class="n">id</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="第二类--标记">第二类 : 标记</h4>
+<ol>
+<li>
+<p>@FormUrlEncoded</p>
+<p>表示发送<code>form-encoded</code>的数据，每个键值对需要用<code>@Filed</code>来注解键名，随后的对象需要提供值。</p>
+</li>
+<li>
+<p>@Multipart</p>
+<p>表示发送 <code>form-encoded</code> 的数据（适用于 有文件 上传的场景），每个键值对需要用<code>@Part</code>来注解键名，随后的对象需要提供值。</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">interface</span> <span class="nc">ApiService</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 表明是一个表单格式的请求（Content-Type:application/x-www-form-urlencoded）
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * &lt;code&gt;Field(&#34;name&#34;)&lt;/code&gt; 表示将后面的 &lt;code&gt;String name&lt;/code&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@POST</span><span class="p">(</span><span class="s2">&#34;/form&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@FormUrlEncoded</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">test</span><span class="p">(</span><span class="nd">@Field</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">)</span> <span class="n">name</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * Part后面支持三种类型，RequestBody、MultipartBody.Part 、任意类型
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 除 MultipartBody.Part以外，其它类型都必须带上表单字段 (MultipartBody.Part 中已经包含了表单字段的信息)
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@POST</span><span class="p">(</span><span class="s2">&#34;/form&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Multpart</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">test</span><span class="p">(</span><span class="nd">@Part</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">)</span> <span class="n">name</span> <span class="p">:</span> <span class="n">RequestBody</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="第三类--网络请求参数">第三类 : 网络请求参数</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">注解名称</th>
+<th style="text-align:center">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">@Headers</td>
+<td style="text-align:center">添加请求头</td>
+</tr>
+<tr>
+<td style="text-align:center">@Header</td>
+<td style="text-align:center">添加不固定值的Header</td>
+</tr>
+<tr>
+<td style="text-align:center">@Body</td>
+<td style="text-align:center">用于非表单请求体</td>
+</tr>
+<tr>
+<td style="text-align:center">@Field</td>
+<td style="text-align:center">向Post表单传入键值对</td>
+</tr>
+<tr>
+<td style="text-align:center">@FieldMap</td>
+<td style="text-align:center">向Post表单传入键值对</td>
+</tr>
+<tr>
+<td style="text-align:center">@Part</td>
+<td style="text-align:center">用于表单字段，适用于有文件上传的情况</td>
+</tr>
+<tr>
+<td style="text-align:center">@PartMap</td>
+<td style="text-align:center">用于表单字段，适用于有文件上传的情况</td>
+</tr>
+<tr>
+<td style="text-align:center">@Query</td>
+<td style="text-align:center">用于表单字段，功能同@Field@FieldMap,区别是一个体现在URL上，一个在请求体上</td>
+</tr>
+<tr>
+<td style="text-align:center">@QueryMap</td>
+<td style="text-align:center">用于表单字段，功能同@Field@FieldMap,区别是一个体现在URL上，一个在请求体上</td>
+</tr>
+<tr>
+<td style="text-align:center">@Path</td>
+<td style="text-align:center">URL缺省值</td>
+</tr>
+<tr>
+<td style="text-align:center">@URL</td>
+<td style="text-align:center">URL设置</td>
+</tr>
+</tbody>
+</table>
+<h5 id="1header--headers">1.@Header &amp; @Headers</h5>
+<p>添加请求头 &amp;添加不固定的请求头</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// @Header
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@GET</span><span class="p">(</span><span class="s2">&#34;/user&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">getUser</span><span class="p">(</span><span class="nd">@Header</span><span class="p">(</span><span class="s2">&#34;Authorization&#34;</span><span class="p">)</span> <span class="n">authorization</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// @Headers
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@GET</span><span class="p">(</span><span class="s2">&#34;/user&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Headers</span><span class="p">(</span><span class="s2">&#34;Authorization : authorization&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">getUser</span><span class="p">()</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>以上的效果是一致的</p>
+<p>区别在于使用场景和使用方式</p>
+<ol>
+<li>使用场景：@Header用于添加不固定的请求头，@Headers用于添加固定的请求头</li>
+<li>使用方式：@Header作用于方法的参数；@Headers作用于方法</li>
+</ol>
+</blockquote>
+<h5 id="2body">2.@Body</h5>
+<p>以 Post方式 传递 自定义数据类型 给服务器,如果提交的是一个Map，那么作用相当于 @Field,不过Map要经过 FormBody.Builder 类处理成为符合 <a href="https://github.com/square/okhttp">OkHttp</a>格式的表单，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// @Body
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@POST</span><span class="p">(</span><span class="s2">&#34;/addUser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">addUser</span><span class="p">(</span><span class="nd">@Body</span> <span class="n">body</span> <span class="p">:</span> <span class="n">FormBody</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// body
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">val</span> <span class="py">builder</span> <span class="p">=</span> <span class="n">FormBody</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">builder</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&#34;key&#34;</span><span class="p">,</span><span class="s2">&#34;value&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">body</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">build</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="3field--fieldmap">3.@Field &amp; @FieldMap</h5>
+<p>发送 Post请求 时提交请求的表单字段,与 @FormUrlEncoded 注解配合使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// @Field
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@POST</span><span class="p">(</span><span class="s2">&#34;/addUser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@FormUrlEncoded</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">addUser</span><span class="p">(</span><span class="nd">@Field</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">)</span> <span class="n">name</span> <span class="p">:</span> <span class="n">String</span> <span class="p">,</span> <span class="nd">@Field</span><span class="p">(</span><span class="s2">&#34;age&#34;</span><span class="p">)</span> <span class="n">age</span> <span class="p">:</span> <span class="n">int</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// @FieldMap
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@POST</span><span class="p">(</span><span class="s2">&#34;/addUser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@FormUrlEncoded</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">addUser</span><span class="p">(</span><span class="nd">@FieldMap</span> <span class="n">map</span> <span class="p">:</span> <span class="n">Map</span><span class="p">&lt;</span><span class="n">String</span> <span class="p">,</span> <span class="n">Any</span><span class="p">?&gt;)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="4part--partmap">4.@Part &amp; @PartMap</h5>
+<p>发送 Post请求 时提交请求的表单字段,与@Field的区别：功能相同，但携带的参数类型更加丰富，包括数据流，所以适用于 有文件上传 的场景,与 @Multipart 注解配合使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// @Part
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@POST</span><span class="p">(</span><span class="s2">&#34;/form&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Multipart</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">uploadFile</span><span class="p">(</span><span class="nd">@Part</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">)</span> <span class="n">name</span> <span class="p">:</span> <span class="n">RequestBody</span> <span class="p">,</span> <span class="nd">@Part</span> <span class="k">file</span> <span class="p">:</span> <span class="n">MultipartBody</span><span class="p">.</span><span class="n">Part</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// @PartMap
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@POST</span><span class="p">(</span><span class="s2">&#34;/form&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Multipart</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">uploadFile</span><span class="p">(</span><span class="nd">@PartMap</span> <span class="n">map</span> <span class="p">:</span> <span class="n">Map</span><span class="p">&lt;</span><span class="n">String</span> <span class="p">,</span> <span class="n">RequestBody</span><span class="p">?&gt;</span> <span class="p">,</span> <span class="nd">@Part</span> <span class="k">file</span> <span class="p">:</span> <span class="n">MultipartBody</span><span class="p">.</span><span class="n">Part</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="5query--querymap">5.@Query &amp; QueryMap</h5>
+<p>用于 @GET 方法的查询参数（Query = Url 中 ‘?’ 后面的 key-value）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// @Query
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@GET</span><span class="p">(</span><span class="s2">&#34;/getUser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">getUser</span><span class="p">(</span><span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)</span> <span class="n">id</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// @QueryMap
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nd">@GET</span><span class="p">(</span><span class="s2">&#34;/getUser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">getUser</span><span class="p">(</span><span class="nd">@QueryMap</span> <span class="n">map</span> <span class="p">:</span> <span class="n">Map</span><span class="p">&lt;</span><span class="n">String</span> <span class="p">,</span> <span class="n">Any</span><span class="p">?&gt;)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="6path">6.@Path</h5>
+<p>URL地址的缺省值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="nd">@GET</span><span class="p">(</span><span class="s2">&#34;/user/info/{id}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">getUser</span><span class="p">(</span><span class="nd">@Path</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)</span> <span class="n">id</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="7url">7.Url</h5>
+<p>直接传入一个请求的 URL变量 用于URL设置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="nd">@GET</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">getUser</span><span class="p">(</span><span class="nd">@Url</span> <span class="n">url</span> <span class="p">:</span> <span class="n">String</span> <span class="p">,</span> <span class="nd">@Query</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)</span> <span class="n">id</span> <span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+            </div>
+            
+                <div class="tags">
+                    
+                    <span class="down-type-item">
+                        <div class="type-text">
+                            <a href='/cjk/tags/android'>
+                                <i class="fa fa-tag"></i> Android
+                            </a>
+                        </div>
+                    </span>
+                    
+                    <span class="down-type-item">
+                        <div class="type-text">
+                            <a href='/cjk/tags/android%E6%A1%86%E6%9E%B6'>
+                                <i class="fa fa-tag"></i> Android框架
+                            </a>
+                        </div>
+                    </span>
+                    
+                </div>
+            
+        </div>
+        
+            
+        
+    
+</div>
+
+    
+
+
+            </div>
+            <div class="zhuti-r">
+                
+<div class="zhuti-r-0">
+    <div class="zhuti-r-1">
+        
+        <div id="r1">
+            <div class="about-zuozhe">
+    <div class="zuozhe">
+        
+            <div class="datou">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/avatar.jpg" alt="">
+            </div>
+        
+        <div class="name-jianjie">
+            <div class="name">Don</div>
+            <div class="jianjie">
+                Android Development Engineer
+            </div>
+        </div>
+    </div>
+
+    <div class="type">
+        <a href='/cjk/posts' class="wenzhang">
+            <p>
+                
+                    
+                
+            </p>
+            <p>1</p>
+        </a>
+        <a href='/cjk/categories' class="fenlei">
+            <p></p>
+            <p>1</p>
+        </a>
+        <a href='/cjk/tags' class="biaoqian">
+            <p></p>
+            <p>2</p>
+        </a>
+    </div>
+
+    <a href="https://github.com/rendongwei">
+        <div class="follow">Follow Me</div>
+    </a>
+    <div class="link">
+        
+    </div>
+</div>
+            <div class="mulu">
+    <div class="dong"></div>
+    <div class="zhi">
+        <div class="wenzi">
+            <div class="zhi-mulu text-wbd"></div>
+            <div class="mulu-items">
+            </div>
+        </div>
+    </div>
+</div>
+            
+
+
+
+    
+    
+
+
+<div class="other">
+    <div class="other-up">
+        <div class="other-qita text-wbd"></div>
+        <div class="xian"></div>
+    </div>
+    <div class="list">
+        
+    </div>
+</div>
+        </div>
+        <div id="r2">
+            
+        </div> 
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+
+        <footer class="footer">
+    
+        <div class="container">
+            <div class="footer-items">
+                
+                    <div class="footer-item">
+                        <i class="fa fa-user"></i> <span id="busuanzi_value_site_pv"></span> |
+                        <i class="fa fa-eye"></i> <span id="busuanzi_value_site_uv"></span>
+                    </div>
+                
+                
+                    <div class="footer-item">
+                        © 2022-2022 <a href="https://github.com/rendongwei">Don</a>
+                    </div>
+                
+                
+            </div>
+        </div>
+    
+
+    
+</footer>
+
+
+        
+        <div class="search-root">
+    <div class="search-zz"></div>
+    <div class="search">
+        <div class="sheader anniu">
+            <div class="sh-l">
+                <input type="text" placeholder='' id="search-key">
+                <span class="sclear"><i class="fa fa-close"></i></span>
+            </div>
+            <div class="sh-r">
+                <button></button>
+            </div>
+        </div>
+        <div class="sbody">
+            <div class="sbody-1">
+                <div class="stip"></div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+
+
+
+
+    
+    
+
+
+<script type="text/javascript">
+    var postsCount =  1 ;
+    var arrPosts = [{"link":"http://rendongwei.cn/posts/android-retrofit/","plain":"前言 Retrofit 是一个 RESTful 的 HTTP 网络请求框架的封装，网络请求的工作本质上是 OkHttp 完成，而 Retrofit 仅负责 网络请求接口的封装\n使用步骤 1.添加Retrofit库的依赖： 1 2 3 4 implementation \u0026#39;com.squareup.retrofit2:retrofit:2.0.2\u0026#39; implementation \u0026#39;com.squareup.retrofit2:converter-gson:2.0.2\u0026#39; implementation \u0026#39;com.google.code.gson:gson:2.8.5\u0026#39; implementation \u0026#39;com.squareup.retrofit2:adapter-rxjava:2.0.2\u0026#39; 后面三个是可选的，分别是数据解析器和gson，以及rxjava支持的依赖\n2.创建用于描述网络请求的接口 Retrofit将 Http请求 抽象成 kotlin接口：采用 注解 描述网络请求参数 和配置网络请求参数\n1 2 3 4 interface ApiSerivce{ @GET(\u0026#34;/api/call\u0026#34;) fun getCall(@Query(\u0026#34;name\u0026#34;) name : String) : Call\u0026lt;String\u0026gt; } 3.创建Retrofit实例 1 2 3 4 5 val retrofit = Retrofit.Builder() .baseUrl(\u0026#34;http://api.xxx.com\u0026#34;) .addConverterFactory(GsonConverterFactory.create()) .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) .build() 4.发送请求 请求分为同步请求和异步请求\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 val service = retrofit.create(ApiService::class) val call = service.getCall(\u0026#34;张**\u0026#34;) // 同步请求 try{ val response : Response\u0026lt;String\u0026gt; = call.execute() val reuslt = response.body() }catch(e:Exception){ } // 异步请求 call.enqueue(object : CallBack\u0026lt;String\u0026gt;{ @Override fun onResponse(call : Call\u0026lt;String\u0026gt; , response : Response\u0026lt;String\u0026gt;){ val reuslt = response.body() } fun onError(call : Call\u0026lt;String\u0026gt; , throwable : Throwable){ } }) response.body()就是Reception对象，网络请求的完整 Url =在创建Retrofit实例时通过.baseUrl()设置 +网络请求接口的注解设置（下面称 “path“ ） 整合的规则如下：\n类型 具体使用 path = 完整的Url Url = \u0026ldquo;http://host:port/api/login\u0026rdquo; path = \u0026ldquo;http://host:port/api/login\u0026rdquo;\nbaseUrl = 不设置 path = 绝对路径 Url = \u0026ldquo;http://host:port/api/login\u0026rdquo;\npath = \u0026ldquo;/login\u0026rdquo;\nbaseUrl = \u0026ldquo;http://host:port/api/\u0026rdquo; path = 相对路径\nbaseUrl = 目录形式 Url = \u0026ldquo;http://host:port/api/v1/login\u0026rdquo; path = \u0026ldquo;login\u0026rdquo;\nbaseUrl = \u0026ldquo;http://host:port/api/v1\u0026rdquo; path = 相对路径\nbaseUrl = 文件形式 Url = \u0026ldquo;http://host:port/api/v1/login\u0026rdquo; path = \u0026ldquo;login\u0026rdquo;\nbaseUrl = \u0026ldquo;http://host:port/api/v1\u0026rdquo; 注解 上面我们用了@GET注解来发送Get请求，Retrofit还提供了很多其他的注解类型\n网络请求方法 @GET 、 @POST 、 @PUT 、@DELETE 、@PATH 、@HEAD 、@OPTIONS 、@HTTP\n标记类 @FormUrlEncoded 、@Multipart 、@Streaming\n网络请求参数 @Header 、@headers 、@URL 、@Body 、@Path 、@Field 、@FieldMap 、@Part 、@PartMap 、@Query 、@QueryMap\n第一类 : 网络请求方法 @GET、@POST、@PUT、@DELETE、@HEAD分别对应 HTTP中的网络请求方式\n@HTTP替换@GET、@POST、@PUT、@DELETE、@HEAD注解的作用 及 更多功能拓展\n具体使用：通过属性method、path、hasBody进行设置\n1 2 3 4 5 6 7 8 9 interface ApiService{ /** * method : 网络请求方法(区分大小写) * path : 网络请求地址路径 * hasBody : 是否有请求体 */ @HTTP(method = \u0026#34;GET\u0026#34; , path = \u0026#34;blog/{id}\u0026#34; , hasBody = false) fun getCall(@Path(\u0026#34;id\u0026#34;) id : String) : Call\u0026lt;String\u0026gt; } 第二类 : 标记 @FormUrlEncoded\n表示发送form-encoded的数据，每个键值对需要用@Filed来注解键名，随后的对象需要提供值。\n@Multipart\n表示发送 form-encoded 的数据（适用于 有文件 上传的场景），每个键值对需要用@Part来注解键名，随后的对象需要提供值。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 interface ApiService{ /** * 表明是一个表单格式的请求（Content-Type:application/x-www-form-urlencoded） * \u0026lt;code\u0026gt;Field(\u0026#34;name\u0026#34;)\u0026lt;/code\u0026gt; 表示将后面的 \u0026lt;code\u0026gt;String name\u0026lt;/code\u0026gt; */ @POST(\u0026#34;/form\u0026#34;) @FormUrlEncoded fun test(@Field(\u0026#34;name\u0026#34;) name : String) : Call\u0026lt;String\u0026gt; /** * Part后面支持三种类型，RequestBody、MultipartBody.Part 、任意类型 * 除 MultipartBody.Part以外，其它类型都必须带上表单字段 (MultipartBody.Part 中已经包含了表单字段的信息) */ @POST(\u0026#34;/form\u0026#34;) @Multpart fun test(@Part(\u0026#34;name\u0026#34;) name : RequestBody) : Call\u0026lt;String\u0026gt; } 第三类 : 网络请求参数 注解名称 解释 @Headers 添加请求头 @Header 添加不固定值的Header @Body 用于非表单请求体 @Field 向Post表单传入键值对 @FieldMap 向Post表单传入键值对 @Part 用于表单字段，适用于有文件上传的情况 @PartMap 用于表单字段，适用于有文件上传的情况 @Query 用于表单字段，功能同@Field@FieldMap,区别是一个体现在URL上，一个在请求体上 @QueryMap 用于表单字段，功能同@Field@FieldMap,区别是一个体现在URL上，一个在请求体上 @Path URL缺省值 @URL URL设置 1.@Header \u0026amp; @Headers 添加请求头 \u0026amp;添加不固定的请求头\n1 2 3 4 5 6 7 8 // @Header @GET(\u0026#34;/user\u0026#34;) fun getUser(@Header(\u0026#34;Authorization\u0026#34;) authorization : String) : Call\u0026lt;User\u0026gt; // @Headers @GET(\u0026#34;/user\u0026#34;) @Headers(\u0026#34;Authorization : authorization\u0026#34;) fun getUser() : Call\u0026lt;User\u0026gt; 以上的效果是一致的\n区别在于使用场景和使用方式\n使用场景：@Header用于添加不固定的请求头，@Headers用于添加固定的请求头 使用方式：@Header作用于方法的参数；@Headers作用于方法 2.@Body 以 Post方式 传递 自定义数据类型 给服务器,如果提交的是一个Map，那么作用相当于 @Field,不过Map要经过 FormBody.Builder 类处理成为符合 OkHttp格式的表单，如：\n1 2 3 4 5 6 7 8 // @Body @POST(\u0026#34;/addUser\u0026#34;) fun addUser(@Body body : FormBody) : Call\u0026lt;String\u0026gt; // body val builder = FormBody.Builder() builder.add(\u0026#34;key\u0026#34;,\u0026#34;value\u0026#34;) val body = builder.build() 3.@Field \u0026amp; @FieldMap 发送 Post请求 时提交请求的表单字段,与 @FormUrlEncoded 注解配合使用\n1 2 3 4 5 6 7 8 9 // @Field @POST(\u0026#34;/addUser\u0026#34;) @FormUrlEncoded fun addUser(@Field(\u0026#34;name\u0026#34;) name : String , @Field(\u0026#34;age\u0026#34;) age : int) : Call\u0026lt;String\u0026gt; // @FieldMap @POST(\u0026#34;/addUser\u0026#34;) @FormUrlEncoded fun addUser(@FieldMap map : Map\u0026lt;String , Any?\u0026gt;) : Call\u0026lt;String\u0026gt; 4.@Part \u0026amp; @PartMap 发送 Post请求 时提交请求的表单字段,与@Field的区别：功能相同，但携带的参数类型更加丰富，包括数据流，所以适用于 有文件上传 的场景,与 @Multipart 注解配合使用\n1 2 3 4 5 6 7 8 9 // @Part @POST(\u0026#34;/form\u0026#34;) @Multipart fun uploadFile(@Part(\u0026#34;name\u0026#34;) name : RequestBody , @Part file : MultipartBody.Part) : Call\u0026lt;String\u0026gt; // @PartMap @POST(\u0026#34;/form\u0026#34;) @Multipart fun uploadFile(@PartMap map : Map\u0026lt;String , RequestBody?\u0026gt; , @Part file : MultipartBody.Part) : Call\u0026lt;String\u0026gt; 5.@Query \u0026amp; QueryMap 用于 @GET 方法的查询参数（Query = Url 中 ‘?’ 后面的 key-value）\n1 2 3 4 5 6 7 // @Query @GET(\u0026#34;/getUser\u0026#34;) fun getUser(@Query(\u0026#34;id\u0026#34;) id : String) : Call\u0026lt;User\u0026gt; // @QueryMap @GET(\u0026#34;/getUser\u0026#34;) fun getUser(@QueryMap map : Map\u0026lt;String , Any?\u0026gt;) : Call\u0026lt;User\u0026gt; 6.@Path URL地址的缺省值\n1 2 @GET(\u0026#34;/user/info/{id}\u0026#34;) fun getUser(@Path(\u0026#34;id\u0026#34;) id : String) : Call\u0026lt;User\u0026gt; 7.Url 直接传入一个请求的 URL变量 用于URL设置\n1 2 @GET fun getUser(@Url url : String , @Query(\u0026#34;id\u0026#34;) id : String) : Call\u0026lt;User\u0026gt; ","pubDate":"2022-11-02","title":"Android-Retrofit"}];
+</script>
+
+
+
+
+
+    </body>
+</html>
+

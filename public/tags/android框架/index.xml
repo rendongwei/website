@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Android框架 on Don的小窝</title>
+    <link>http://rendongwei.cn/tags/android%E6%A1%86%E6%9E%B6/</link>
+    <description>Recent content in Android框架 on Don的小窝</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 02 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/tags/android%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Android-Retrofit</title>
+      <link>http://rendongwei.cn/posts/android-retrofit/</link>
+      <pubDate>Wed, 02 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/android-retrofit/</guid>
+      <description>前言 Retrofit 是一个 RESTful 的 HTTP 网络请求框架的封装，网络请求的工作本质上是 OkHttp 完成，而 Retrofit 仅负责 网络请求接口的封装 使用</description>
+    </item>
+    
+  </channel>
+</rss>

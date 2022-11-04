@@ -6,14 +6,14 @@
     <description>Recent content in Android on Don的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/tags/android/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Jenkins 编译安卓</title>
-      <link>http://rendongwei.cn/posts/jenkins%E7%BC%96%E8%AF%91%E5%AE%89%E5%8D%93/</link>
-      <pubDate>Wed, 26 Oct 2022 00:00:00 +0000</pubDate>
+      <title>Android-Retrofit</title>
+      <link>http://rendongwei.cn/posts/android-retrofit/</link>
+      <pubDate>Wed, 02 Nov 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://rendongwei.cn/posts/jenkins%E7%BC%96%E8%AF%91%E5%AE%89%E5%8D%93/</guid>
-      <description>更新记录 时间 内容 2022-10-26 初稿 软件版本 soft Version Jenkins 2.346.2 SDK 3859397 JDK 1.8.0_151 一、配置编译环境 ①、SDK 1 2 3 4 5 6 7 8 9 10 11 ➜ cd /usr/local</description>
+      <guid>http://rendongwei.cn/posts/android-retrofit/</guid>
+      <description>前言 Retrofit 是一个 RESTful 的 HTTP 网络请求框架的封装，网络请求的工作本质上是 OkHttp 完成，而 Retrofit 仅负责 网络请求接口的封装 使用</description>
     </item>
     
   </channel>
