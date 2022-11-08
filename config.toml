@@ -122,7 +122,7 @@ hasCJKLanguage = true
         copyRight = true
         from = 2022
         # wheher to enable count of visitor and view
-        visitor = true
+        visitor = false
         # wheher to enable theme information
         themeInfo = false
 
