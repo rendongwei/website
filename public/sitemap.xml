@@ -2,31 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://rendongwei.cn/tags/android/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/categories/android/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/posts/android-disklrucache/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/posts/android-gson/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/posts/android-room/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/tags/android%E6%A1%86%E6%9E%B6/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/categories/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/posts/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/tags/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://rendongwei.cn/posts/android-glide/</loc>
+    <lastmod>2022-11-04T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://rendongwei.cn/about/</loc>
     <lastmod>2022-11-02T11:29:04+08:00</lastmod>
   </url><url>
-    <loc>http://rendongwei.cn/</loc>
-    <lastmod>2022-11-02T11:29:04+08:00</lastmod>
-  </url><url>
-    <loc>http://rendongwei.cn/tags/android/</loc>
-    <lastmod>2022-11-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://rendongwei.cn/categories/android/</loc>
-    <lastmod>2022-11-02T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://rendongwei.cn/posts/android-retrofit/</loc>
-    <lastmod>2022-11-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://rendongwei.cn/tags/android%E6%A1%86%E6%9E%B6/</loc>
-    <lastmod>2022-11-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://rendongwei.cn/categories/</loc>
-    <lastmod>2022-11-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://rendongwei.cn/posts/</loc>
-    <lastmod>2022-11-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://rendongwei.cn/tags/</loc>
     <lastmod>2022-11-02T00:00:00+00:00</lastmod>
   </url>
 </urlset>

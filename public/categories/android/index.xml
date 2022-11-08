@@ -6,7 +6,43 @@
     <description>Recent content in Android on Don的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 02 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/categories/android/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/categories/android/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Android-DiskLruCache</title>
+      <link>http://rendongwei.cn/posts/android-disklrucache/</link>
+      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/android-disklrucache/</guid>
+      <description>什么是DiskLruCache 是文件缓存的管理对象，使用 LRU 算法对保存在永久存储设备上的缓存文件进行管</description>
+    </item>
+    
+    <item>
+      <title>Android-Gson</title>
+      <link>http://rendongwei.cn/posts/android-gson/</link>
+      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/android-gson/</guid>
+      <description>什么是Gson Gson 是一个Java库，可用于将Java对象转换为它们的Json 表示形式。它还可以用于将J</description>
+    </item>
+    
+    <item>
+      <title>Android-Room</title>
+      <link>http://rendongwei.cn/posts/android-room/</link>
+      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/android-room/</guid>
+      <description>前言 room是官方推出的数据库映射框架。在没有room之前，比较出名的就是greendao库。既然官</description>
+    </item>
+    
+    <item>
+      <title>Android-Glide</title>
+      <link>http://rendongwei.cn/posts/android-glide/</link>
+      <pubDate>Fri, 04 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/android-glide/</guid>
+      <description>前言 Glide是一个快速高效的Android图片加载库，注重于平滑的滚动。统一了显示本地图片和网络图</description>
+    </item>
+    
     <item>
       <title>Android-Retrofit</title>
       <link>http://rendongwei.cn/posts/android-retrofit/</link>

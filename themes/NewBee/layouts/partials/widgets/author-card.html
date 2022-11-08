@@ -14,7 +14,7 @@
     </div>
 
     <div class="type">
-        <a href='{{ add "/" (add .Lang "/posts") }}' class="wenzhang">
+        <a href='{{"/posts"}}' class="wenzhang">
             <p>
                 {{ if eq .Lang "en" }}
                     {{ i18n "postsUnit" (len .Site.RegularPages) }}
@@ -24,11 +24,11 @@
             </p>
             <p>{{ len .Site.RegularPages }}</p>
         </a>
-        <a href='{{ add "/" (add .Lang "/categories") }}' class="fenlei">
+        <a href='{{ "/categories" }}' class="fenlei">
             <p>{{ i18n "categoriesUnit" (len .Site.Taxonomies.categories) }}</p>
             <p>{{ len .Site.Taxonomies.categories }}</p>
         </a>
-        <a href='{{ add "/" (add .Lang "/tags") }}' class="biaoqian">
+        <a href='{{ "/tags" }}' class="biaoqian">
             <p>{{ i18n "tagsUnit" (len .Site.Taxonomies.tags) }}</p>
             <p>{{ len .Site.Taxonomies.tags }}</p>
         </a>
