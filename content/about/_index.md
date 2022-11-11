@@ -14,6 +14,8 @@ draft: false
 
 github : [http://github.com/rendongwei](http://github.com/rendongwei)
 
+gitee : [don. (rendongwei) - Gitee.com](https://gitee.com/rendongwei)
+
 工作年限 : 11年
 
 ## 教育背景
