@@ -6,58 +6,94 @@
     <description>Recent content in Posts on Don的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go-Json</title>
+      <link>http://rendongwei.cn/posts/go/go-json/</link>
+      <pubDate>Fri, 11 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/go/go-json/</guid>
+      <description>前言 很多程序都需要处理或者发布数据，不管这个程序是要使用数据库，进行网络调用，还是与分布式系统打交道</description>
+    </item>
+    
+    <item>
+      <title>Go-切片7连问</title>
+      <link>http://rendongwei.cn/posts/go/go-%E5%88%87%E7%89%877%E8%BF%9E%E9%97%AE/</link>
+      <pubDate>Fri, 11 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/go/go-%E5%88%87%E7%89%877%E8%BF%9E%E9%97%AE/</guid>
+      <description>Go之切片7连问 数组和切片有什么区别？ Go语言中数组是固定长度的，不能动态扩容，在编译期就会确定大小</description>
+    </item>
+    
+    <item>
+      <title>Go-并发</title>
+      <link>http://rendongwei.cn/posts/go/go-%E5%B9%B6%E5%8F%91/</link>
+      <pubDate>Fri, 11 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/go/go-%E5%B9%B6%E5%8F%91/</guid>
+      <description>前言 go并发包含两个概念： goroutine:使用一个函数，但是与调用该函数是独立的。 channel</description>
+    </item>
+    
+    <item>
+      <title>Go-特点</title>
+      <link>http://rendongwei.cn/posts/go/go-%E7%89%B9%E7%82%B9/</link>
+      <pubDate>Fri, 11 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/go/go-%E7%89%B9%E7%82%B9/</guid>
+      <description>支持函数多个返回值 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 package main import &amp;#34;fmt&amp;#34; //定义两个返回值的函数 func getNames() (n1, n2 string) { return &amp;#34;name1&amp;#34;,</description>
+    </item>
+    
     <item>
       <title>Kotlin-Sealed密封类</title>
-      <link>http://rendongwei.cn/posts/kotlin-sealed/</link>
-      <pubDate>Tue, 08 Nov 2022 00:00:00 +0000</pubDate>
+      <link>http://rendongwei.cn/posts/kotlin/kotlin-sealed/</link>
+      <pubDate>Fri, 08 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://rendongwei.cn/posts/kotlin-sealed/</guid>
-      <description>在代码中，我们经常需要限定一些有限集合的状态值，例如： 网络请求：成功——失败 账户状态：VIP——穷逼</description>
+      <guid>http://rendongwei.cn/posts/kotlin/kotlin-sealed/</guid>
+      <description>前言 在代码中，我们经常需要限定一些有限集合的状态值，例如： 网络请求：成功——失败 账户状态：VIP——</description>
     </item>
     
     <item>
       <title>Android-DiskLruCache</title>
-      <link>http://rendongwei.cn/posts/android-disklrucache/</link>
-      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      <link>http://rendongwei.cn/posts/android/android-disklrucache/</link>
+      <pubDate>Fri, 10 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://rendongwei.cn/posts/android-disklrucache/</guid>
+      <guid>http://rendongwei.cn/posts/android/android-disklrucache/</guid>
       <description>什么是DiskLruCache 是文件缓存的管理对象，使用 LRU 算法对保存在永久存储设备上的缓存文件进行管</description>
     </item>
     
     <item>
       <title>Android-Gson</title>
-      <link>http://rendongwei.cn/posts/android-gson/</link>
-      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      <link>http://rendongwei.cn/posts/android/android-gson/</link>
+      <pubDate>Wed, 08 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://rendongwei.cn/posts/android-gson/</guid>
+      <guid>http://rendongwei.cn/posts/android/android-gson/</guid>
       <description>什么是Gson Gson 是一个Java库，可用于将Java对象转换为它们的Json 表示形式。它还可以用于将J</description>
     </item>
     
     <item>
       <title>Android-Room</title>
-      <link>http://rendongwei.cn/posts/android-room/</link>
-      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      <link>http://rendongwei.cn/posts/android/android-room/</link>
+      <pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://rendongwei.cn/posts/android-room/</guid>
+      <guid>http://rendongwei.cn/posts/android/android-room/</guid>
       <description>前言 room是官方推出的数据库映射框架。在没有room之前，比较出名的就是greendao库。既然官</description>
     </item>
     
     <item>
       <title>Android-Glide</title>
-      <link>http://rendongwei.cn/posts/android-glide/</link>
-      <pubDate>Fri, 04 Nov 2022 00:00:00 +0000</pubDate>
+      <link>http://rendongwei.cn/posts/android/android-glide/</link>
+      <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://rendongwei.cn/posts/android-glide/</guid>
+      <guid>http://rendongwei.cn/posts/android/android-glide/</guid>
       <description>前言 Glide是一个快速高效的Android图片加载库，注重于平滑的滚动。统一了显示本地图片和网络图</description>
     </item>
     
     <item>
       <title>Android-Retrofit</title>
-      <link>http://rendongwei.cn/posts/android-retrofit/</link>
-      <pubDate>Wed, 02 Nov 2022 00:00:00 +0000</pubDate>
+      <link>http://rendongwei.cn/posts/android/android-retrofit/</link>
+      <pubDate>Thu, 02 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://rendongwei.cn/posts/android-retrofit/</guid>
+      <guid>http://rendongwei.cn/posts/android/android-retrofit/</guid>
       <description>前言 Retrofit 是一个 RESTful 的 HTTP 网络请求框架的封装，网络请求的工作本质上是 OkHttp 完成，而 Retrofit 仅负责 网络请求接口的封装 使用</description>
     </item>
     

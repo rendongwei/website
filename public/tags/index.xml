@@ -6,11 +6,20 @@
     <description>Recent content in Tags on Don的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go</title>
+      <link>http://rendongwei.cn/tags/go/</link>
+      <pubDate>Fri, 11 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/tags/go/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Kotlin</title>
       <link>http://rendongwei.cn/tags/kotlin/</link>
-      <pubDate>Tue, 08 Nov 2022 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 08 Jul 2022 00:00:00 +0000</pubDate>
       
       <guid>http://rendongwei.cn/tags/kotlin/</guid>
       <description></description>
@@ -19,7 +28,7 @@
     <item>
       <title>Android</title>
       <link>http://rendongwei.cn/tags/android/</link>
-      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 10 Jun 2022 00:00:00 +0000</pubDate>
       
       <guid>http://rendongwei.cn/tags/android/</guid>
       <description></description>
@@ -28,7 +37,7 @@
     <item>
       <title>Android框架</title>
       <link>http://rendongwei.cn/tags/android%E6%A1%86%E6%9E%B6/</link>
-      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 10 Jun 2022 00:00:00 +0000</pubDate>
       
       <guid>http://rendongwei.cn/tags/android%E6%A1%86%E6%9E%B6/</guid>
       <description></description>

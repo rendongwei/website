@@ -6,14 +6,14 @@
     <description>Recent content in Kotlin on Don的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 08 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kotlin-Sealed密封类</title>
-      <link>http://rendongwei.cn/posts/kotlin-sealed/</link>
-      <pubDate>Tue, 08 Nov 2022 00:00:00 +0000</pubDate>
+      <link>http://rendongwei.cn/posts/kotlin/kotlin-sealed/</link>
+      <pubDate>Fri, 08 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://rendongwei.cn/posts/kotlin-sealed/</guid>
-      <description>在代码中，我们经常需要限定一些有限集合的状态值，例如： 网络请求：成功——失败 账户状态：VIP——穷逼</description>
+      <guid>http://rendongwei.cn/posts/kotlin/kotlin-sealed/</guid>
+      <description>前言 在代码中，我们经常需要限定一些有限集合的状态值，例如： 网络请求：成功——失败 账户状态：VIP——</description>
     </item>
     
   </channel>

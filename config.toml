@@ -165,7 +165,7 @@ hasCJKLanguage = true
 # 相关文章的配置。详情请移步：https://gohugo.io/content-management/related/
 [related]
     # 取值0-100之间，越小匹配到的文章越多，但准确性稍差
-    threshold = 0
+    threshold = 100
     # 允许包含最新的文章
     includeNewer = true
     # 设置为true时，可以在索引和查询中同时使用小写关键字。

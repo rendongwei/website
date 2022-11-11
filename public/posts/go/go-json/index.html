@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Don的小窝 | Go-Json</title>
+    <meta name="description" content="前言 很多程序都需要处理或者发布数据，不管这个程序是要使用数据库，进行网络调用，还是与分布式系统打交道 ">
+    <link rel="canonical" href="http://rendongwei.cn/posts/go/go-json/" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta property="og:title" content="Go-Json" />
+<meta property="og:description" content="前言 很多程序都需要处理或者发布数据，不管这个程序是要使用数据库，进行网络调用，还是与分布式系统打交道" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://rendongwei.cn/posts/go/go-json/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-11-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-11-11T00:00:00+00:00" />
+
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go-Json"/>
+<meta name="twitter:description" content="前言 很多程序都需要处理或者发布数据，不管这个程序是要使用数据库，进行网络调用，还是与分布式系统打交道"/>
+
+    
+        
+    
+    <link rel="stylesheet" href='/css/style.css' />
+    <link rel="stylesheet" href='/css/search.css' />
+    <link rel="stylesheet" href='/css/list.css' />
+    <link rel="stylesheet" href='/css/terms.css' />
+    <link rel="stylesheet" href='/css/taxonomy.css' />
+    <link rel="stylesheet" href='/css/home.css' />
+    <link rel="stylesheet" href='/css/syntax.css' />
+    
+    <link rel="stylesheet" href='/css/shortcode.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href='/css/_custom.css' />
+    <style>
+         
+    </style>
+    
+    
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [["$", "$"]],
+      },
+      displayMath: [
+        ["$$", "$$"],
+        ["\[\[", "\]\]"],
+      ],
+      svg: {
+        fontCache: "global",
+      },
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  ></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="/js/lazysizes.min.js" async=""></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/yes.js"></script>
+    
+</head><body style="font-family: ,'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;">
+        <div class="loading">
+            <div class="loading-bg"></div>
+            <div class="loading-long">
+                <div class="loading-short"></div>
+            </div>
+        </div>
+
+        <header>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/">
+                <span class="logo">Don的小窝</span>
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <a href="/">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-home'></i> 主页</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/posts">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-book'></i> 文章</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-folder-open'></i> 分类</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-tags'></i> 标签</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="menu-item">
+                    <div class="hengtiao-root">
+                        <div class="hengtiao"></div>
+                        <div class="name text-wbd-reverse"><i class='fa fa-info-circle'></i> 关于</div>
+                    </div>
+                </div>
+            </a>
+            
+            <div class="navbar-burger">
+                <div class="burger-btn"><span><i class="fa fa-navicon"></i></span></div>
+            </div>
+            
+            
+            
+            <div class="mode">
+                <span class="sun"><i class="fa fa-sun-o"></i></span>
+                <span class="moon"><i class="fa fa-moon-o"></i></span>
+            </div>
+            
+        </div>
+    </nav>
+    <div class="burger-items">
+        
+        <a href="/">
+            <div class="burger-item">
+                <i class='fa fa-home'></i> 主页
+            </div>
+        </a>
+        
+        <a href="/posts">
+            <div class="burger-item">
+                <i class='fa fa-book'></i> 文章
+            </div>
+        </a>
+        
+        <a href="/categories">
+            <div class="burger-item">
+                <i class='fa fa-folder-open'></i> 分类
+            </div>
+        </a>
+        
+        <a href="/tags">
+            <div class="burger-item">
+                <i class='fa fa-tags'></i> 标签
+            </div>
+        </a>
+        
+        <a href="/about">
+            <div class="burger-item">
+                <i class='fa fa-info-circle'></i> 关于
+            </div>
+        </a>
+        
+    </div>
+    <div class="header-rest"></div>
+</header>
+
+
+        <div id="content">
+
+
+
+
+
+
+
+
+    <div class="hero">
+        
+            <div class="hero-img">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/start.jpg" alt="">
+            </div>
+        
+        <div class="hero-content">
+            <div class="hero-title">Go-Json</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> : 2022-11-11 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> : 2022-11-11 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        :
+                        
+                            <a href='
+                                /categories/go
+                            '>
+                                Go
+                            </a>
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> : 1952 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> : 4  &nbsp;</span>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+<div class="zhuti-0">
+    <div class="container">
+        <div class="zhuti">
+            <div class="zhuti-l">
+                
+
+
+
+    
+
+
+<div class="content-root">
+    <div class="long">
+        <button class="tosides-1 text-wbd">
+            <i class="fa fa-arrow-right"></i>
+        </button>
+        <button class="tosides-2 text-wbd">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <button class="toup text-wbd">
+            <i class="fa fa-arrow-up"></i>
+        </button>
+    </div>
+    
+        <div class="content">
+            <div class="content-self">
+                <h1 id="前言">前言</h1>
+<p>很多程序都需要处理或者发布数据，不管这个程序是要使用数据库，进行网络调用，还是与分布式系统打交道。如果程序需要处理XML或者JSON，可以使用标准库名为xml和json的包，它们可以处理这些格式的数据。如果想实现自己的编解码，可以将这些包的实现作为指导。</p>
+<p>在今天，JSON远比XML流行。这主要是因为与XML相比，使用JSON需要处理的标签更少。而这意味着网络传输时每个消息的数据更少传输效率更高，提升系统性能。而且JSON可以转换为BSON(Binary JavaScript Object Notation，二进制JavaScript对象标记)，进一步缩小每个消息的数据长度。因此，我们学习如何在Go程序里处理并发布JSON。处理XML的方法也很类似。</p>
+<h2 id="1解码json">1.解码JSON</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;encoding/json&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;io&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;log&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;strings&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">UserName</span> <span class="kt">string</span> <span class="s">`json:&#34;username&#34;`</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Password</span> <span class="kt">string</span> <span class="s">`json:&#34;password&#34;`</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">jsonString</span> <span class="kt">string</span> <span class="p">=</span> <span class="s">`{
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;username&#34;:&#34;aaa@163.com&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;password&#34;:&#34;12356&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">}`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">user</span> <span class="nx">User</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">reader</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">jsonString</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">NewDecoder</span><span class="p">(</span><span class="nx">reader</span><span class="p">).</span><span class="nf">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">user</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">log</span><span class="p">.</span><span class="nf">Fatalln</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%#v&#34;</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">main</span><span class="p">.</span><span class="nx">User</span><span class="p">{</span><span class="nx">UserName</span><span class="p">:</span><span class="s">&#34;aaa@163.com&#34;</span><span class="p">,</span> <span class="nx">Password</span><span class="p">:</span><span class="s">&#34;12356&#34;</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>NewDecoder函数接收一个实现了io.Reader接口类型的值作为参数。只要类型实现了这些接口，就可以自动获得许多功能支持。函数NewDecoder返回一个指向Decoder类型的指针。由于Go语言支持复合语句调用，可以直接调用从NewDecoder函数返回值的Decode方法，而不用将这个返回值存入变量。func (dec *Decoder) Decode(v interface{}) error  而Decode方法接收一个interface{}类型的值做参数，并返回一个error值。因为任何类型都实现了一个空接口interface{}。这意味着Decode方法可以接收任何类型的值。使用反射，Decode方法会拿到传入值的类型信息。然后，在读取JSON数据流的时候，Decode方法会解码成对应的类型值。我们向Decode方法传入的指向user类型的指针变量地址，而这个地址实际值为nil。该方法调用后，这个指针变量被赋给一个User类型的值，并根据解码后的JSON文档做初始化。</p>
+<p>有时，需要处理的JSON文档会以String的形式存在。在这种情况下，需要将string转为切片[]byte，并使用json包的Unmarshal函数进行反序列化处理。如下代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;encoding/json&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;log&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Contact</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Name</span>    <span class="kt">string</span> <span class="s">`json:&#34;name&#34;`</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Title</span>   <span class="kt">string</span> <span class="s">`json:&#34;title&#34;`</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Contact</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">Home</span> <span class="kt">string</span> <span class="s">`json:&#34;home&#34;`</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">Cell</span> <span class="kt">string</span> <span class="s">`json:&#34;cell&#34;`</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="s">`json:&#34;contact&#34;`</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//JSON包含用于反序列号的演示字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">JSON</span> <span class="p">=</span> <span class="s">`{
+</span></span></span><span class="line"><span class="cl"><span class="s">&#34;name&#34;: &#34;Gopher&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">&#34;title&#34;:&#34;programer&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">&#34;contact&#34;:{&#34;home&#34;:&#34;415.333.33333&#34;, &#34;cell&#34;:&#34;415.55.555&#34;}
+</span></span></span><span class="line"><span class="cl"><span class="s">}`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">c</span> <span class="nx">Contact</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Unmarshal</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">JSON</span><span class="p">),</span> <span class="o">&amp;</span><span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="s">&#34;Error:&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以上例子将JSON文档保存在一个字符串变量里，并使用Unmarshal函数将JSON文档解码到一个结构类型的值里。</p>
+<p>有时，无法为JSON的格式声明一个结构类型，而是需要更加灵活的方式来处理JSON文档，在这种情况下，可以将JSON文档解码到一个map变量中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">JSON</span> <span class="p">=</span> <span class="s">`{
+</span></span></span><span class="line"><span class="cl"><span class="s">&#34;name&#34;: &#34;Gopher&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">&#34;title&#34;:&#34;programer&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">&#34;contact&#34;:{&#34;home&#34;:&#34;415.333.33333&#34;, &#34;cell&#34;:&#34;415.55.555&#34;}
+</span></span></span><span class="line"><span class="cl"><span class="s">}`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">c</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Unmarshal</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">JSON</span><span class="p">),</span> <span class="o">&amp;</span><span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="s">&#34;Error:&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Name:&#34;</span><span class="p">,</span> <span class="nx">c</span><span class="p">[</span><span class="s">&#34;name&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">c</span><span class="p">[</span><span class="s">&#34;contact&#34;</span><span class="p">].(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})[</span><span class="s">&#34;cell&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">map</span><span class="p">[</span><span class="nx">contact</span><span class="p">:</span><span class="kd">map</span><span class="p">[</span><span class="nx">cell</span><span class="p">:</span><span class="mf">415.55.555</span> <span class="nx">home</span><span class="p">:</span><span class="mf">415.333.33333</span><span class="p">]</span> <span class="nx">name</span><span class="p">:</span><span class="nx">Gopher</span> <span class="nx">title</span><span class="p">:</span><span class="nx">programer</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Name</span><span class="p">:</span> <span class="nx">Gopher</span>
+</span></span><span class="line"><span class="cl"><span class="mf">415.55.555</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将结构类型变量替换为map类型的变量。变量c声明为一个map类型，键是string类型，其值是interface{}类型。这意味着map类型可以使用任意类型的值作为给定键的值。虽然这种方法为处理JSON文档带来很大灵活性，但是有一个缺点。让我们看一下访问contact子文档的cell字段代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">c</span><span class="p">[</span><span class="s">&#34;contact&#34;</span><span class="p">].(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})[</span><span class="s">&#34;cell&#34;</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为每个键的值类型都是interface{}，所以必须将值转为合适的类型，才能处理这个值。</p>
+<h2 id="2编码json">2.编码JSON</h2>
+<p>以上举例说明了将json文档解码为json类型，下面看下如何将json类型变量转为json文档。使用json包MarshalIndent函数可以进行编码。该函数可以很方便地将Go语言map类型的值或者结构类型转换为易读格式的json文档。序列号是指将数据转换为json字符串的过程。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;encoding/json&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;log&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">c</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">c</span><span class="p">[</span><span class="s">&#34;name&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;Gopher&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">c</span><span class="p">[</span><span class="s">&#34;title&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;programmer&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">c</span><span class="p">[</span><span class="s">&#34;contact&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+</span></span><span class="line"><span class="cl">        <span class="s">&#34;home&#34;</span><span class="p">:</span> <span class="s">&#34;415.55.555&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s">&#34;cell&#34;</span><span class="p">:</span> <span class="s">&#34;413.33.333&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//将这个映射序列化到Json字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">MarshalIndent</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34; &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="s">&#34;Error:&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"> <span class="s">&#34;contact&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;cell&#34;</span><span class="p">:</span> <span class="s">&#34;413.33.333&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;home&#34;</span><span class="p">:</span> <span class="s">&#34;415.55.555&#34;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">},</span>
+</span></span><span class="line"><span class="cl"> <span class="s">&#34;name&#34;</span><span class="p">:</span> <span class="s">&#34;Gopher&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="s">&#34;title&#34;</span><span class="p">:</span> <span class="s">&#34;programmer&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以上代码展示了json包的MarshalIndent函数将一个map值转换为JSON字符串。函数MarshalIndent返回一个byte切片，用来保存JSON字符串和一个error值。</p>
+<p>下面看下json包MarshalIndent函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">MarshalIndent</span><span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">prefix</span><span class="p">,</span> <span class="nx">indent</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">b</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">Marshal</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">buf</span> <span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">err</span> <span class="p">=</span> <span class="nf">Indent</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">buf</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">prefix</span><span class="p">,</span> <span class="nx">indent</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">buf</span><span class="p">.</span><span class="nf">Bytes</span><span class="p">(),</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>MarshalIndent解码最终调用的还是Marshal，只是用缩进对输出进行格式化了。Marshal会使用反射来确定如何将map类型转换为JSON字符串。如果不需要输出带缩进格式JSON字符串，直接使用Marshal即可。</p>
+
+            </div>
+            
+                <div class="tags">
+                    
+                    <span class="down-type-item">
+                        <div class="type-text">
+                            <a href='/cjk/tags/go'>
+                                <i class="fa fa-tag"></i> Go
+                            </a>
+                        </div>
+                    </span>
+                    
+                </div>
+            
+        </div>
+        
+            
+                <div class="pre-next">
+                    
+    
+        
+        <a href="http://rendongwei.cn/posts/go/go-%E5%88%87%E7%89%877%E8%BF%9E%E9%97%AE/" class="pre pre-last" style="text-align: center;">
+            <span class="pre-icon"><i class="fa fa-hand-o-left"></i></span>
+            <div class="pre-title-root">
+                <span>Go-切片7连问</span>
+            </div>
+        </a>
+        
+    
+    
+
+                </div>
+            
+        
+    
+</div>
+
+    
+
+
+            </div>
+            <div class="zhuti-r">
+                
+<div class="zhuti-r-0">
+    <div class="zhuti-r-1">
+        
+        <div id="r1">
+            <div class="about-zuozhe">
+    <div class="zuozhe">
+        
+            <div class="datou">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/avatar.jpg" alt="">
+            </div>
+        
+        <div class="name-jianjie">
+            <div class="name">Don</div>
+            <div class="jianjie">
+                Android Development Engineer
+            </div>
+        </div>
+    </div>
+
+    <div class="type">
+        <a href='/posts' class="wenzhang">
+            <p>
+                
+                    
+                
+            </p>
+            <p>10</p>
+        </a>
+        <a href='/categories' class="fenlei">
+            <p></p>
+            <p>3</p>
+        </a>
+        <a href='/tags' class="biaoqian">
+            <p></p>
+            <p>4</p>
+        </a>
+    </div>
+
+    <a href="https://github.com/rendongwei">
+        <div class="follow">Follow Me</div>
+    </a>
+    <div class="link">
+        
+    </div>
+</div>
+            <div class="mulu">
+    <div class="dong"></div>
+    <div class="zhi">
+        <div class="wenzi">
+            <div class="zhi-mulu text-wbd"></div>
+            <div class="mulu-items">
+            </div>
+        </div>
+    </div>
+</div>
+            
+
+
+
+    
+    
+
+
+<div class="other">
+    <div class="other-up">
+        <div class="other-qita text-wbd"></div>
+        <div class="xian"></div>
+    </div>
+    <div class="list">
+        
+            <a href="http://rendongwei.cn/posts/go/go-%E5%88%87%E7%89%877%E8%BF%9E%E9%97%AE/" class="">
+                
+<a href="http://rendongwei.cn/posts/go/go-%E5%88%87%E7%89%877%E8%BF%9E%E9%97%AE/">
+    <div class="list-item">
+        <div class="icon-other-root">
+            
+                <div class="icon-other" style="background-image: url( /images/start.jpg );"></div>
+            
+        </div>
+        <div class="list-right">
+            <div class="other-title">
+                Go-切片7连问
+            </div>
+            <div class="other-summary">Go之切片7连问 数组和切片有什么区别？ Go语言中数组是固定长度的，不能动态扩容，在编译期就会确定大小</div>
+            <div class="other-date">2022-11-11</div>
+        </div>
+    </div>
+</a>
+            </a>
+        
+            <a href="http://rendongwei.cn/posts/go/go-%E5%B9%B6%E5%8F%91/" class="">
+                
+<a href="http://rendongwei.cn/posts/go/go-%E5%B9%B6%E5%8F%91/">
+    <div class="list-item">
+        <div class="icon-other-root">
+            
+                <div class="icon-other" style="background-image: url( /images/start.jpg );"></div>
+            
+        </div>
+        <div class="list-right">
+            <div class="other-title">
+                Go-并发
+            </div>
+            <div class="other-summary">前言 go并发包含两个概念： goroutine:使用一个函数，但是与调用该函数是独立的。 channel</div>
+            <div class="other-date">2022-11-11</div>
+        </div>
+    </div>
+</a>
+            </a>
+        
+            <a href="http://rendongwei.cn/posts/go/go-%E7%89%B9%E7%82%B9/" class="">
+                
+<a href="http://rendongwei.cn/posts/go/go-%E7%89%B9%E7%82%B9/">
+    <div class="list-item">
+        <div class="icon-other-root">
+            
+                <div class="icon-other" style="background-image: url( /images/start.jpg );"></div>
+            
+        </div>
+        <div class="list-right">
+            <div class="other-title">
+                Go-特点
+            </div>
+            <div class="other-summary">支持函数多个返回值 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 package main import &#34;fmt&#34; //定义两个返回值的函数 func getNames() (n1, n2 string) { return &#34;name1&#34;,</div>
+            <div class="other-date">2022-11-11</div>
+        </div>
+    </div>
+</a>
+            </a>
+        
+    </div>
+</div>
+        </div>
+        <div id="r2">
+            
+        </div> 
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+
+        <footer class="footer">
+    
+        <div class="container">
+            <div class="footer-items">
+                
+                
+                    <div class="footer-item">
+                        © 2022-2022 <a href="https://github.com/rendongwei">Don</a>
+                    </div>
+                
+                
+            </div>
+        </div>
+    
+
+    
+</footer>
+
+
+        
+        <div class="search-root">
+    <div class="search-zz"></div>
+    <div class="search">
+        <div class="sheader anniu">
+            <div class="sh-l">
+                <input type="text" placeholder='' id="search-key">
+                <span class="sclear"><i class="fa fa-close"></i></span>
+            </div>
+            <div class="sh-r">
+                <button></button>
+            </div>
+        </div>
+        <div class="sbody">
+            <div class="sbody-1">
+                <div class="stip"></div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+
+
+
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+
+<script type="text/javascript">
+    var postsCount =  10 ;
+    var arrPosts = [{"link":"http://rendongwei.cn/posts/go/go-json/","plain":"前言 很多程序都需要处理或者发布数据，不管这个程序是要使用数据库，进行网络调用，还是与分布式系统打交道。如果程序需要处理XML或者JSON，可以使用标准库名为xml和json的包，它们可以处理这些格式的数据。如果想实现自己的编解码，可以将这些包的实现作为指导。\n在今天，JSON远比XML流行。这主要是因为与XML相比，使用JSON需要处理的标签更少。而这意味着网络传输时每个消息的数据更少传输效率更高，提升系统性能。而且JSON可以转换为BSON(Binary JavaScript Object Notation，二进制JavaScript对象标记)，进一步缩小每个消息的数据长度。因此，我们学习如何在Go程序里处理并发布JSON。处理XML的方法也很类似。\n1.解码JSON 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 package main import ( \u0026#34;encoding/json\u0026#34; \u0026#34;fmt\u0026#34; \u0026#34;io\u0026#34; \u0026#34;log\u0026#34; \u0026#34;strings\u0026#34; ) type User struct { UserName string `json:\u0026#34;username\u0026#34;` Password string `json:\u0026#34;password\u0026#34;` } var jsonString string = `{ \u0026#34;username\u0026#34;:\u0026#34;aaa@163.com\u0026#34;, \u0026#34;password\u0026#34;:\u0026#34;12356\u0026#34; }` func main() { var user User reader := strings.NewReader(jsonString) err := json.NewDecoder(reader).Decode(\u0026amp;user) if err != nil { log.Fatalln(err) } fmt.Printf(\u0026#34;%#v\u0026#34;, user) } 输出:\n1 main.User{UserName:\u0026#34;aaa@163.com\u0026#34;, Password:\u0026#34;12356\u0026#34;} NewDecoder函数接收一个实现了io.Reader接口类型的值作为参数。只要类型实现了这些接口，就可以自动获得许多功能支持。函数NewDecoder返回一个指向Decoder类型的指针。由于Go语言支持复合语句调用，可以直接调用从NewDecoder函数返回值的Decode方法，而不用将这个返回值存入变量。func (dec *Decoder) Decode(v interface{}) error 而Decode方法接收一个interface{}类型的值做参数，并返回一个error值。因为任何类型都实现了一个空接口interface{}。这意味着Decode方法可以接收任何类型的值。使用反射，Decode方法会拿到传入值的类型信息。然后，在读取JSON数据流的时候，Decode方法会解码成对应的类型值。我们向Decode方法传入的指向user类型的指针变量地址，而这个地址实际值为nil。该方法调用后，这个指针变量被赋给一个User类型的值，并根据解码后的JSON文档做初始化。\n有时，需要处理的JSON文档会以String的形式存在。在这种情况下，需要将string转为切片[]byte，并使用json包的Unmarshal函数进行反序列化处理。如下代码：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 package main import ( \u0026#34;encoding/json\u0026#34; \u0026#34;fmt\u0026#34; \u0026#34;log\u0026#34; ) type Contact struct { Name string `json:\u0026#34;name\u0026#34;` Title string `json:\u0026#34;title\u0026#34;` Contact struct { Home string `json:\u0026#34;home\u0026#34;` Cell string `json:\u0026#34;cell\u0026#34;` } `json:\u0026#34;contact\u0026#34;` } //JSON包含用于反序列号的演示字符串 var JSON = `{ \u0026#34;name\u0026#34;: \u0026#34;Gopher\u0026#34;, \u0026#34;title\u0026#34;:\u0026#34;programer\u0026#34;, \u0026#34;contact\u0026#34;:{\u0026#34;home\u0026#34;:\u0026#34;415.333.33333\u0026#34;, \u0026#34;cell\u0026#34;:\u0026#34;415.55.555\u0026#34;} }` func main() { var c Contact err := json.Unmarshal([]byte(JSON), \u0026amp;c) if err != nil { log.Fatal(\u0026#34;Error:\u0026#34;, err) return } fmt.Println(c) } 以上例子将JSON文档保存在一个字符串变量里，并使用Unmarshal函数将JSON文档解码到一个结构类型的值里。\n有时，无法为JSON的格式声明一个结构类型，而是需要更加灵活的方式来处理JSON文档，在这种情况下，可以将JSON文档解码到一个map变量中：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 var JSON = `{ \u0026#34;name\u0026#34;: \u0026#34;Gopher\u0026#34;, \u0026#34;title\u0026#34;:\u0026#34;programer\u0026#34;, \u0026#34;contact\u0026#34;:{\u0026#34;home\u0026#34;:\u0026#34;415.333.33333\u0026#34;, \u0026#34;cell\u0026#34;:\u0026#34;415.55.555\u0026#34;} }` func main() { var c map[string]interface{} err := json.Unmarshal([]byte(JSON), \u0026amp;c) if err != nil { log.Fatal(\u0026#34;Error:\u0026#34;, err) return } fmt.Println(c) fmt.Println(\u0026#34;Name:\u0026#34;, c[\u0026#34;name\u0026#34;]) fmt.Print(c[\u0026#34;contact\u0026#34;].(map[string]interface{})[\u0026#34;cell\u0026#34;]) } 输出:\n1 2 3 map[contact:map[cell:415.55.555 home:415.333.33333] name:Gopher title:programer] Name: Gopher 415.55.555 将结构类型变量替换为map类型的变量。变量c声明为一个map类型，键是string类型，其值是interface{}类型。这意味着map类型可以使用任意类型的值作为给定键的值。虽然这种方法为处理JSON文档带来很大灵活性，但是有一个缺点。让我们看一下访问contact子文档的cell字段代码：\n1 fmt.Print(c[\u0026#34;contact\u0026#34;].(map[string]interface{})[\u0026#34;cell\u0026#34;]) 因为每个键的值类型都是interface{}，所以必须将值转为合适的类型，才能处理这个值。\n2.编码JSON 以上举例说明了将json文档解码为json类型，下面看下如何将json类型变量转为json文档。使用json包MarshalIndent函数可以进行编码。该函数可以很方便地将Go语言map类型的值或者结构类型转换为易读格式的json文档。序列号是指将数据转换为json字符串的过程。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 package main import ( \u0026#34;encoding/json\u0026#34; \u0026#34;fmt\u0026#34; \u0026#34;log\u0026#34; ) func main() { c := make(map[string]interface{}) c[\u0026#34;name\u0026#34;] = \u0026#34;Gopher\u0026#34; c[\u0026#34;title\u0026#34;] = \u0026#34;programmer\u0026#34; c[\u0026#34;contact\u0026#34;] = map[string]interface{}{ \u0026#34;home\u0026#34;: \u0026#34;415.55.555\u0026#34;, \u0026#34;cell\u0026#34;: \u0026#34;413.33.333\u0026#34;, } //将这个映射序列化到Json字符串 data, err := json.MarshalIndent(c, \u0026#34;\u0026#34;, \u0026#34; \u0026#34;) if err != nil { log.Fatal(\u0026#34;Error:\u0026#34;, err) return } fmt.Println(string(data)) } 输出:\n1 2 3 4 5 6 7 8 { \u0026#34;contact\u0026#34;: { \u0026#34;cell\u0026#34;: \u0026#34;413.33.333\u0026#34;, \u0026#34;home\u0026#34;: \u0026#34;415.55.555\u0026#34; }, \u0026#34;name\u0026#34;: \u0026#34;Gopher\u0026#34;, \u0026#34;title\u0026#34;: \u0026#34;programmer\u0026#34; } 以上代码展示了json包的MarshalIndent函数将一个map值转换为JSON字符串。函数MarshalIndent返回一个byte切片，用来保存JSON字符串和一个error值。\n下面看下json包MarshalIndent函数：\n1 2 3 4 5 6 7 8 9 10 11 12 func MarshalIndent(v interface{}, prefix, indent string) ([]byte, error) { b, err := Marshal(v) if err != nil { return nil, err } var buf bytes.Buffer err = Indent(\u0026amp;buf, b, prefix, indent) if err != nil { return nil, err } return buf.Bytes(), nil } MarshalIndent解码最终调用的还是Marshal，只是用缩进对输出进行格式化了。Marshal会使用反射来确定如何将map类型转换为JSON字符串。如果不需要输出带缩进格式JSON字符串，直接使用Marshal即可。\n","pubDate":"2022-11-11","title":"Go-Json"},{"link":"http://rendongwei.cn/posts/go/go-%E5%88%87%E7%89%877%E8%BF%9E%E9%97%AE/","plain":"Go之切片7连问 数组和切片有什么区别？ Go语言中数组是固定长度的，不能动态扩容，在编译期就会确定大小，声明方式如下：\n1 2 var buffer [255]int buffer := [255]int{0} 切片是对数组的抽象，因为数组的长度是不可变的，在某些场景下使用起来就不是很方便，所以Go语言提供了一种灵活，功能强悍的内置类型切片(“动态数组”)，与数组相比切片的长度是不固定的，可以追加元素。切片是一种数据结构，切片不是数组，切片描述的是一块数组。\n我们可以直接声明一个未指定大小的数组来定义切片，也可以使用make()函数来创建切片，声明方式如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 // 直接声明 var slice []int // 字面量方式 slice := []int{1,2,3,4,5} // make创建 slice := make([]int,5,10) // 截取下标的方式 slice := array[1:5] // new一个 slice := *new([]int) 切片可以使用append追加元素，当cap不足时进行动态扩容。\n拷贝大切片一定比拷贝小切片代价大吗？ 这道题本质是考察对切片本质的理解，Go语言中只有值传递，所以我们以传递切片为例子：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 func main() { param1 := make([]int, 100) param2 := make([]int, 100000000) smallSlice(param1) largeSlice(param2) } func smallSlice(params []int) { // .... } func largeSlice(params []int) { // .... } 切片param2要比param1大1000000个数量级，在进行值拷贝的时候，是否需要更昂贵的操作呢？ 实际上不会，因为切片本质内部结构如下：\n1 2 3 4 5 type SliceHeader struct { Data uintptr Len int Cap int } 切片中的第一个字是指向切片底层数组的指针，这是切片的存储空间，第二个字段是切片的长度，第三个字段是容量。将一个切片变量分配给另一个变量只会复制三个机器字，大切片跟小切片的区别无非就是 Len 和 Cap的值比小切片的这两个值大一些，如果发生拷贝，本质上就是拷贝上面的三个字段。\n切片的深浅拷贝 深浅拷贝都是进行复制，区别在于复制出来的新对象与原来的对象在它们发生改变时，是否会相互影响，本质区别就是复制出来的对象与原对象是否会指向同一个地址。在Go语言，切片拷贝有三种方式：\n使用=操作符拷贝切片，这种就是浅拷贝 使用[:]下标的方式复制切片，这种也是浅拷贝 使用Go语言的内置函数copy()进行切片拷贝，这种就是深拷贝 零切片、空切片、nil切片是什么 1. 零切片 我们把切片内部数组的元素都是零值或者底层数组的内容就全是 nil的切片叫做零切片，使用make创建的、长度、容量都不为0的切片就是零值切片：\n1 2 3 4 5 // 0 0 0 0 0 slice := make([]int,5) // nil nil nil nil nil slice := make([]*int,5) 2.nil切片 nil切片的长度和容量都为0，并且和nil比较的结果为true，采用直接创建切片的方式、new创建切片的方式都可以创建nil切片：\n1 2 var slice []int var slice = *new([]int) 3.空切片 空切片的长度和容量也都为0，但是和nil的比较结果为false，因为所有的空切片的数据指针都指向同一个地址 0xc42003bda0；使用字面量、make可以创建空切片：\n1 2 var slice = []int{} var slice = make([]int,0) 空切片指向的 zerobase 内存地址是一个神奇的地址，从 Go 语言的源代码中可以看到它的定义：\n1 2 3 4 5 6 7 8 9 10 11 // base address for all 0-byte allocations var zerobase uintptr // 分配对象内存 func mallocgc(size uintptr, typ *_type, needzero bool) unsafe.Pointer { ... if size == 0 { return unsafe.Pointer(\u0026amp;zerobase) } ... } 切片的扩容策略 这个问题是一个高频考点，我们通过源码来解析一下切片的扩容策略，切片的扩容都是调用growslice方法，截取部分重要源代码：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 // runtime/slice.go // et：表示slice的一个元素；old：表示旧的slice；cap：表示新切片需要的容量； func growslice(et *_type, old slice, cap int) slice { if cap \u0026lt; old.cap { panic(errorString(\u0026#34;growslice: cap out of range\u0026#34;)) } if et.size == 0 { // append should not create a slice with nil pointer but non-zero len. // We assume that append doesn\u0026#39;t need to preserve old.array in this case. return slice{unsafe.Pointer(\u0026amp;zerobase), old.len, cap} } newcap := old.cap // 两倍扩容 doublecap := newcap + newcap // 新切片需要的容量大于两倍扩容的容量，则直接按照新切片需要的容量扩容 if cap \u0026gt; doublecap { newcap = cap } else { // 原 slice 容量小于 1024 的时候，新 slice 容量按2倍扩容 if old.cap \u0026lt; 1024 { newcap = doublecap } else { // 原 slice 容量超过 1024，新 slice 容量变成原来的1.25倍。 // Check 0 \u0026lt; newcap to detect overflow // and prevent an infinite loop. for 0 \u0026lt; newcap \u0026amp;\u0026amp; newcap \u0026lt; cap { newcap += newcap / 4 } // Set newcap to the requested cap when // the newcap calculation overflowed. if newcap \u0026lt;= 0 { newcap = cap } } } // 后半部分还对 newcap 作了一个内存对齐，这个和内存分配策略相关。进行内存对齐之后，新 slice 的容量是要 大于等于 老 slice 容量的 2倍或者1.25倍。 var overflow bool var lenmem, newlenmem, capmem uintptr // Specialize for common values of et.size. // For 1 we don\u0026#39;t need any division/multiplication. // For sys.PtrSize, compiler will optimize division/multiplication into a shift by a constant. // For powers of 2, use a variable shift. switch { case et.size == 1: lenmem = uintptr(old.len) newlenmem = uintptr(cap) capmem = roundupsize(uintptr(newcap)) overflow = uintptr(newcap) \u0026gt; maxAlloc newcap = int(capmem) case et.size == sys.PtrSize: lenmem = uintptr(old.len) * sys.PtrSize newlenmem = uintptr(cap) * sys.PtrSize capmem = roundupsize(uintptr(newcap) * sys.PtrSize) overflow = uintptr(newcap) \u0026gt; maxAlloc/sys.PtrSize newcap = int(capmem / sys.PtrSize) case isPowerOfTwo(et.size): var shift uintptr if sys.PtrSize == 8 { // Mask shift for better code generation. shift = uintptr(sys.Ctz64(uint64(et.size))) \u0026amp; 63 } else { shift = uintptr(sys.Ctz32(uint32(et.size))) \u0026amp; 31 } lenmem = uintptr(old.len) \u0026lt;\u0026lt; shift newlenmem = uintptr(cap) \u0026lt;\u0026lt; shift capmem = roundupsize(uintptr(newcap) \u0026lt;\u0026lt; shift) overflow = uintptr(newcap) \u0026gt; (maxAlloc \u0026gt;\u0026gt; shift) newcap = int(capmem \u0026gt;\u0026gt; shift) default: lenmem = uintptr(old.len) * et.size newlenmem = uintptr(cap) * et.size capmem, overflow = math.MulUintptr(et.size, uintptr(newcap)) capmem = roundupsize(capmem) newcap = int(capmem / et.size) } } 通过源代码可以总结切片扩容策略： 切片在扩容时会进行内存对齐，这个和内存分配策略相关。进行内存对齐之后，新 slice 的容量是要 大于等于老 slice 容量的 2倍或者1.25倍，当原 slice 容量小于 1024 的时候，新 slice 容量变成原来的 2 倍；原 slice 容量超过 1024，新 slice 容量变成原来的1.25倍。\n参数传递切片和切片指针有什么区别 我们都知道切片底层就是一个结构体，里面有三个元素： 分别表示切片底层数据的地址，切片长度，切片容量。\n1 2 3 4 5 type SliceHeader struct { Data uintptr Len int Cap int } 当切片作为参数传递时，其实就是一个结构体的传递，因为Go语言参数传递只有值传递，传递一个切片就会浅拷贝原切片，但因为底层数据的地址没有变，所以在函数内对切片的修改，也将会影响到函数外的切片，举例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 func modifySlice(s []string) { s[0] = \u0026#34;hello\u0026#34; s[1] = \u0026#34;golang\u0026#34; fmt.Println(\u0026#34;out slice: \u0026#34;, s) } func main() { s := []string{\u0026#34;hello\u0026#34;, \u0026#34;world\u0026#34;} modifySlice(s) fmt.Println(\u0026#34;inner slice: \u0026#34;, s) } // 运行结果 out slice: [hello golang] inner slice: [hello golang] 不过这也有一个特例，先看一个例子：\n1 2 3 4 5 6 7 8 9 10 11 12 13 func appendSlice(s []string) { s = append(s, \u0026#34;studying\u0026#34;) fmt.Println(\u0026#34;out slice: \u0026#34;, s) } func main() { s := []string{\u0026#34;hello\u0026#34;, \u0026#34;world\u0026#34;} appendSlice(s) fmt.Println(\u0026#34;inner slice: \u0026#34;, s) } // 运行结果 out slice: [hello world studying] inner slice: [hello world] 因为切片发生了扩容，函数外的切片指向了一个新的底层数组，所以函数内外不会相互影响，因此可以得出一个结论，当参数直接传递切片时，如果指向底层数组的指针被覆盖或者修改（重分配、append触发扩容），此时函数内部对数据的修改将不再影响到外部的切片，代表长度的len和容量cap也均不会被修改。\n参数传递切片指针就很容易理解了，如果你想修改切片中元素的值，并且更改切片的容量和底层数组，则应该按指针传递。\nrange遍历切片有什么要注意的 Go语言提供了range关键字用于for 循环中迭代数组(array)、切片(slice)、通道(channel)或集合(map)的元素，有两种使用方式：\n1 2 for k,v := range _ { } for k := range _ { } 第一种是遍历下标和对应值，第二种是只遍历下标，使用range遍历切片时会先拷贝一份，然后在遍历拷贝数据：\n1 2 3 4 5 6 7 8 9 10 11 12 s := []int{1, 2} for k, v := range s { } 会被编译器认为是 for_temp := s len_temp := len(for_temp) for index_temp := 0; index_temp \u0026lt; len_temp; index_temp++ { value_temp := for_temp[index_temp] _ = index_temp value := value_temp } 不知道这个知识点的情况下很容易踩坑，例如下面这个例子：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 package main import ( \u0026#34;fmt\u0026#34; ) type user struct { name string age uint64 } func main() { u := []user{ {\u0026#34;asong\u0026#34;,23}, {\u0026#34;song\u0026#34;,19}, {\u0026#34;asong2020\u0026#34;,18}, } for _,v := range u{ if v.age != 18{ v.age = 20 } } fmt.Println(u) } // 运行结果 [{asong 23} {song 19} {asong2020 18}] 因为使用range遍历切片u，变量v是拷贝切片中的数据，修改拷贝数据不会对原切片有影响。\n","pubDate":"2022-11-11","title":"Go-切片7连问"},{"link":"http://rendongwei.cn/posts/go/go-%E5%B9%B6%E5%8F%91/","plain":"前言 go并发包含两个概念：\ngoroutine:使用一个函数，但是与调用该函数是独立的。\nchannel：goroutine间通信用的管道\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 package main import ( \u0026#34;io\u0026#34; \u0026#34;os\u0026#34; \u0026#34;time\u0026#34; ) func echo(in io.Reader, out io.Writer) { io.Copy(out, in) } func main() { go echo(os.Stdin, os.Stdout) time.Sleep(30 * time.Second) os.Exit(0) } 使用一个goroutine在一直在后台将标准输入中的内容拷贝到标准输出当中，直到main函数退出。 使用匿名函数来新建goroutine:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 package main import ( \u0026#34;fmt\u0026#34; \u0026#34;runtime\u0026#34; ) func main() { fmt.Println(\u0026#34;Outside a goroutine\u0026#34;) go func() { fmt.Println(\u0026#34;Inside a goroutine\u0026#34;) }() fmt.Println(\u0026#34;Outside again\u0026#34;) runtime.Gosched() } 1.WaitGroup使用 在main函数中调用runtime.Gosched是为了挂起main本身协程，让匿名函数执行结果能打印出来。使用go关键字创建goroutine并不意味着该goroutine会马上得到执行。这个需要根据go的调度器来安排的。Gosched只能提供其他goroutine执行的机会，如果其他goroutine正在等待数据库查询或者读io的话调度器会继续执行当前的goroutine，而无法保证其他的goroutine能执行完成。要等待所有的goroutine执行完成需要调用wait group。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 package main import ( \u0026#34;compress/gzip\u0026#34; \u0026#34;io\u0026#34; \u0026#34;os\u0026#34; ) func compress(filename string) error { in, err := os.Open(filename) if err != nil { return err } defer in.Close() out, err := os.Create(filename + \u0026#34;.zip\u0026#34;) if err != nil { return err } defer out.Close() gzout := gzip.NewWriter(out) _, err = io.Copy(gzout, in) gzout.Close() return err } func main() { for _, file := range os.Args { compress(file) } } 该程序实现，将命令行后面提供的所有文件，压缩成对应的.zip文件。因为gzip函数是是耗io的，所以该程序在性能上没有充分利用cpu多核来实现多个文件的并行压缩：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 func main() { var wg sync.WaitGroup var i int = -1 var file string for i, file = range os.Args[1:] { wg.Add(1) go func(file string) { compress(file) wg.Done() }(file) } wg.Wait() fmt.Printf(\u0026#34;Compressed %d files\\n\u0026#34;, i+1) } 修改的main函数可以并发的执行多个文件压缩。main函数通过wait函数等待所有的goroutine结束才返回。注意：这里为了保证for循环每次迭代后对应的file都传入对应的goroutine当中，需要在匿名函数中添加参数file，如果直接调用compress传入file，随着for循环的迭代，前面的goroutine不一定立即得到执行导致前面的goroutine中filename和后面的一样，最后导致结果不正确。为了防止for循环当中传入到每个goroutine参数都不会被改变，必须在匿名函数当中传入参数的副本。\n2.Mutex互斥锁使用 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 package main import ( \u0026#34;bufio\u0026#34; \u0026#34;fmt\u0026#34; \u0026#34;os\u0026#34; \u0026#34;strings\u0026#34; \u0026#34;sync\u0026#34; ) type words struct { sync.Mutex found map[string]int } func newWords() *words { return \u0026amp;words{found: map[string]int{}} } func (w *words) add(word string, n int) { w.Lock() defer w.Unlock() if _, ok := w.found[word]; !ok { w.found[word] = n return } w.found[word] += n } func tallyWords(filename string, dict *words) error { file, err := os.Open(filename) if err != nil { return err } defer file.Close() scanner := bufio.NewScanner(file) scanner.Split(bufio.ScanWords) for scanner.Scan() { word := strings.ToLower(scanner.Text()) dict.add(word, 1) } return scanner.Err() } func main() { var wg sync.WaitGroup w := newWords() for _, f := range os.Args[1:] { wg.Add(1) go func(file string) { if err := tallyWords(file, w); err != nil { fmt.Println(err.Error()) } wg.Done() }(f) } wg.Wait() fmt.Println(\u0026#34;Words that appear more than onece:\u0026#34;) for word, count := range w.found { if count \u0026gt; 1 { fmt.Printf(\u0026#34;%s: %d\\n\u0026#34;, word, count) } } } 统计命令行参数传入文件，所有单词出现次数大于2的。这里使用mutex互斥锁，实现多个goroutine访问map时不会冲突。需要注意的是只有所有的goroutine 都在等待同一个互斥锁，才能实现这种对同一个资源的竞争。该互斥锁必须是唯一。\n3.Channel使用 channle可以类比成网络socket，可以单项或者双向的发送数据到接收方。channle发送的数据是有类型的，不同于socket发送的字节流。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 package main import ( \u0026#34;fmt\u0026#34; \u0026#34;os\u0026#34; \u0026#34;time\u0026#34; ) func readStdin(out chan\u0026lt;- []byte) { for { data := make([]byte, 1024) length, _ := os.Stdin.Read(data) if length \u0026gt; 0 { } out \u0026lt;- data } } func main() { done := time.After(30 * time.Second) echo := make(chan []byte) go readStdin(echo) for { select { case buf := \u0026lt;-echo: os.Stdout.Write(buf) case \u0026lt;-done: fmt.Println(\u0026#34;Time out\u0026#34;) os.Exit(0) } } } time.After会在等待的时候后返回一个channel time.Time类型。select会阻塞等到case能执行，多个case都有数据会随机选择。\n4.如何安全的关闭Channel 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 package main import ( \u0026#34;fmt\u0026#34; \u0026#34;time\u0026#34; ) func send(ch chan string) { for { ch \u0026lt;- \u0026#34;Hello\u0026#34; time.Sleep(500 * time.Millisecond) } } func main() { msg := make(chan string) util := time.After(1 * time.Second) go send(msg) for { select { case m := \u0026lt;-msg: fmt.Println(m) case \u0026lt;-util: close(msg) time.Sleep(500 * time.Microsecond) return } } } 输出:\n1 2 3 Hello Hello panic: send on closed channel 出现panic错误，因为main函数在时间到之后已经关闭了channel，而send后台还要goroutine往msg通道发送数据。注意：关闭通道必须由发送方来关闭否则会出现上面错误。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 package main import ( \u0026#34;fmt\u0026#34; \u0026#34;time\u0026#34; ) func send(ch chan\u0026lt;- string, done \u0026lt;-chan bool) { for { select { case \u0026lt;-done: println(\u0026#34;Done\u0026#34;) close(ch) return default: ch \u0026lt;- \u0026#34;hello\u0026#34; time.Sleep(500 * time.Microsecond) } } } func main() { msg := make(chan string) done := make(chan bool) util := time.After(5 * time.Second) go send(msg, done) for { select { case m := \u0026lt;-msg: fmt.Println(m) case \u0026lt;-util: done \u0026lt;- true time.Sleep(500 * time.Millisecond) return } } } 通过添加一个done通道，来通知send关闭msg通道，实现通道安全关闭。在go当中，经常需要设置一个done通道来进行goroutine之间状态的同步。 上面的用例send函数中done只能用于发送，ch用于接收。接收端触发通道关闭条件时，就需要通知发送端，通过done来通知。\n5.使用Buffer Cshannel实现锁的功能 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 package main import ( \u0026#34;fmt\u0026#34; \u0026#34;time\u0026#34; ) func worker(id int, lock chan bool) { fmt.Printf(\u0026#34;%d wants the lock\\n\u0026#34;, id) lock \u0026lt;- true fmt.Printf(\u0026#34;%d has the lock\\n\u0026#34;, id) time.Sleep(500 * time.Millisecond) fmt.Printf(\u0026#34;%d is releasing the lock\\n\u0026#34;, id) \u0026lt;-lock } func main() { lock := make(chan bool, 1) for i := 1; i \u0026lt; 7; i++ { go worker(i, lock) } time.Sleep(10 * time.Second) } 输出:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 1 wants the lock 1 has the lock 2 wants the lock 4 wants the lock 6 wants the lock 3 wants the lock 5 wants the lock 1 is releasing the lock 2 has the lock 2 is releasing the lock 4 has the lock 4 is releasing the lock 6 has the lock 6 is releasing the lock 3 has the lock 3 is releasing the lock 5 has the lock 5 is releasing the lock 在output结果中看到首先是goroutine 1获得写入channel的机会，执行打印操作sleep之后读出channel里的内容，释放channel空间供其他goroutine写入。\n","pubDate":"2022-11-11","title":"Go-并发"},{"link":"http://rendongwei.cn/posts/go/go-%E7%89%B9%E7%82%B9/","plain":"支持函数多个返回值 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 package main import \u0026#34;fmt\u0026#34; //定义两个返回值的函数 func getNames() (n1, n2 string) { return \u0026#34;name1\u0026#34;, \u0026#34;name2\u0026#34; } func main() { n1, n2 := getNames() fmt.Println(n1, n2) //选择一个返回值，忽略另一个 n3, _ := getNames() fmt.Println(n3) } 也可以直接对形参赋值，return后面直接返回即可\n1 2 3 4 5 func getNames() (n1, n2 string) { n1 = \u0026#34;name1\u0026#34; n2 = \u0026#34;name2\u0026#34; return } go包含大量的标准库 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 package main import ( \u0026#34;bufio\u0026#34; \u0026#34;fmt\u0026#34; \u0026#34;net\u0026#34; ) func main() { //通过TCP建立连接 conn, _ := net.Dial(\u0026#34;tcp\u0026#34;, \u0026#34;www.baidu.com:80\u0026#34;) //向网络连接发送数据 fmt.Fprintf(conn, \u0026#34;GET / HTTP/1.0\\r\\n\\r\\n\u0026#34;) //打印响应的第一行 status, _ := bufio.NewReader(conn).ReadString(\u0026#39;\\n\u0026#39;) fmt.Println(status) } go发起网络连接很简单，同时启动一个web服务器同样也简单。借助标准库，如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 package main import ( \u0026#34;fmt\u0026#34; \u0026#34;io/ioutil\u0026#34; \u0026#34;net/http\u0026#34; ) func main() { res, _ := http.Get(\u0026#34;http://www.baidu.com\u0026#34;) body, _ := ioutil.ReadAll(res.Body) fmt.Println(string(body)) res.Body.Close() } 以上显示了http请求用例。\nTesting 在go语言里面，使用testing包可以很容易的写测试用例，这在软件开发当中非常重要：\n1 2 3 4 5 6 7 8 9 10 func getName() (string, string) { return \u0026#34;name1\u0026#34;, \u0026#34;name2\u0026#34; } func TestNames(t *testing.T) { s, s2 := getName() if s != \u0026#34;name1\u0026#34; || s2 != \u0026#34;name2\u0026#34; { t.Error(\u0026#34;error occurred from name\u0026#34;) } } 测试用例go文件命名以_test结尾，测试函数名以Test开头。在命令行执行go test即可执行测试用例。\n","pubDate":"2022-11-11","title":"Go-特点"},{"link":"http://rendongwei.cn/posts/kotlin/kotlin-sealed/","plain":"前言 在代码中，我们经常需要限定一些有限集合的状态值，例如：\n网络请求：成功——失败 账户状态：VIP——穷逼VIP——普通 工具栏：展开——半折叠——收缩 等等。\n通常情况下，我们会使用enum class来做封装，将可见的状态值通过枚举来使用。\n1 2 3 4 enum class NetworkState(val value: Int) { SUCCESS(0), ERROR(1) } 但枚举的缺点也很明显，首先，枚举比普通代码更占内存，同时，每个枚举只能定义一个实例，不能拓展更多信息。\n除此之外，还有种方式，通过抽象类来对状态进行封装，但这种方式的缺点也很明显，它打破了枚举的限制性，所以，Kotlin给出了新的解决方案——Sealed Class（密封类）。\n1.创建状态集 下面我们以网络请求的例子来看下具体如何使用Sealed Class来进行状态的封装。\n和抽象类类似，Sealed Class可用于表示层级关系。它的子类可以是任意的类：data class、普通Kotlin对象、普通的类，甚至也可以是另一个密封类，所以，我们定义一个Result Sealed Class：\n1 2 3 4 sealed class Result\u0026lt;out T : Any\u0026gt; { data class Success\u0026lt;out T : Any\u0026gt;(val data: T) : Result\u0026lt;T\u0026gt;() data class Error(val exception: Exception) : Result\u0026lt;Nothing\u0026gt;() } 当然，也不一定非要写在顶层类中：\n1 2 3 sealed class Result\u0026lt;out T : Any\u0026gt; data class Success\u0026lt;out T : Any\u0026gt;(val data: T) : Result\u0026lt;T\u0026gt;() data class Error(val exception: Exception) : Result\u0026lt;Nothing\u0026gt;() 这样也是可以的，它们的区别在于引用的时候，是否包含顶层类来引用而已。\n大部分场景下，还是建议第一种方式，可以比较清晰的展示调用的层级关系。\n在这个例子中，我们定义了两个场景，分别是Success和Error，它表示我们假设的网络状态就这两种，分别在每种状态下，例如Success，都可以传入自定义的数据类型，因为它本身就是一个class，所以借助这一点，就可以自定义状态携带的场景值。在上面这个例子中，我们定义在Success中，传递data，而在Error时，传递Exception信息。\n所以，使用Sealed Class的第一步，就是对场景进行封装，梳理具体的场景枚举，并定义需要传递的数据类型。\n如果场景值不需要传递数据，那么可以简单的使用：object xxxx，定义一个变量即可。\n2.使用 接下来，我们来看下如何使用Sealed Class。\n1 2 3 4 5 6 7 8 9 10 11 12 13 fun main() { // 模拟封装枚举的产生 val result = if (true) { Result.Success(\u0026#34;Success\u0026#34;) } else { Result.Error(Exception(\u0026#34;error\u0026#34;)) } when (result) { is Result.Success -\u0026gt; print(result.data) is Result.Error -\u0026gt; print(result.exception) } } 大部分场景下，Sealed Class都会配合when一起使用，同时，如果when的参数是Sealed Class，在IDE中可以快速补全所有分支，而且不会需要你单独补充else 分支，因为Sealed Class已经是完备的了。\n所以when和Sealed Class真是天作之合。\n3.进一步简化 其实我们还可以进一步简化代码的调用，因为我们每次使用Sealed Class的时候，都需要when一下，有些时候，也会产生一些代码冗余，所以，借助拓展函数，我们进一步对代码进行简化。\n1 2 3 4 5 6 7 8 9 10 11 inline fun Result\u0026lt;Any\u0026gt;.doSuccess(success: (Any) -\u0026gt; Unit) { if (this is Result.Success) { success(data) } } inline fun Result\u0026lt;Any\u0026gt;.doError(error: (Exception?) -\u0026gt; Unit) { if (this is Result.Error) { error(exception) } } 这里我对Result进行了拓展，增加了doSuccess和doError两个拓展，同时接收两个高阶函数来接收处理行为，这样我们在调用的时候就更加简单了。\n1 2 result.doSuccess { } result.doError { } 所以when和Sealed Class和拓展函数，真是天作之合。\n那么你一定好奇了，Sealed Class又是怎么实现的，其实反编译一下就一目了然了，实际上Sealed Class也是通过抽象类来实现的，编译器生成了一个只能编译器调用的构造函数，从而避免其它类进行修改，实现了Sealed Class的有限性。\n4.封装 Sealed Class与抽象类类似，可以对逻辑进行拓展，我们来看下面这个例子。\n1 2 3 4 5 6 7 8 9 10 11 12 sealed class TTS { abstract fun speak() class BaiduTTS(val value: String) : TTS() { override fun speak() = print(value) } class TencentTTS(val value: String) : TTS() { override fun speak() = print(value) } } 这时候如果要进行拓展，就很方便了，代码如下所示。\n1 2 3 class XunFeiTTS(val value: String) : TTS() { override fun speak() = print(value) } 所以，Sealed Class可以说是在抽象类的基础上，增加了对状态有限性的控制，拓展与抽象，比枚举更加灵活和方便了。\n再例如前面网络的封装：\n1 2 3 4 5 6 7 8 9 sealed class Result\u0026lt;out T : Any\u0026gt; { data class Success\u0026lt;out T : Any\u0026gt;(val data: T) : Result\u0026lt;T\u0026gt;() sealed class Error(val exception: Exception) : Result\u0026lt;Nothing\u0026gt;() { class RecoverableError(exception: Exception) : Error(exception) class NonRecoverableError(exception: Exception) : Error(exception) } object InProgress : Result\u0026lt;Nothing\u0026gt;() } 通过Sealed Class可以很方便的对Error类型进行拓展，同时，增加新的状态也非常简单，更重要的是，通过IDE的自动补全功能，IDE可以自动生成各个条件分支，避免人工编码的遗漏。\n","pubDate":"2022-07-08","title":"Kotlin-Sealed密封类"},{"link":"http://rendongwei.cn/posts/android/android-disklrucache/","plain":"什么是DiskLruCache 是文件缓存的管理对象，使用 LRU 算法对保存在永久存储设备上的缓存文件进行管理。\n比手机的闪存更低速的访问设备是网络，文件缓存的意义就在于通过重复利用缓存的数据，减少网络请求构造方法是 private 修饰的，无法使用。，减少网络流量，提高响应速度。\n用法 使用静态方法 static DiskLruCache open(File directory, int appVersion, int valueCount, long maxSize) 来创建 DiskLruCache 对象。 构造方法是 private 修饰的，无法使用。 参数 directory 表示保存的目录，注意外部目录权限问题。 参数 appVersion 可以设置为版本号 version code。 参数 valueCount 表示一个 key 可以关联几个文件，一般为 1（一般情况关联多个没有必要，而且会增加编码复杂度）。 参数 maxSize 缓存大小限制，单位 Byte。 需要调用 close() 关闭。 读取缓存 先调用 DiskLruCache.Snapshot get(String key) 获取一个 DiskLruCache.Snapshot 对象，再通过这个对象进行读取操作。 返回的类型是 DiskLruCache.Snapshot，其实就是这个 key 对应的相关数据，主要是多个文件的输入流和大小，多个文件的数量对应构造方法里的 valueCount。 Snapshot.getLength(int index) 获取文件大小，进行一些判断。 Snapshot.getInputStream(int index) 获取一个 InputStream，可以用来读取文件内容，注意这个流不是缓存流，如果需要缓存流可以创建 BufferedInputStream 包装一下 InputStream。 这个 InputStream 需要手动关闭，既可以直接关闭 InputStream，也可以调用 Snapshot.close() 来关闭属于它的所有 InputStream。 写入缓存 先调用 DiskLruCache.Editor edit(String key) 方法获取一个 DiskLruCache.Editor 对象，再通过这个对象进行写入操作。 返回的类型是 DiskLruCache.Editor，其实就是将写入相关的一些操作抽象处理，对这个对象的操作都对应 key 关联的缓存文件。 如果同时有另一个 Editor 对象是通过 key 获取的，edit 方法将返回 null。保证同时只有一个 Editor 对象在对同一个 key 进行写入操作。因此调用之后需要判断一下。 OutputStream newOutputStream(int index) 创建输出流来写入数据，注意这个流不是缓存流，如果需要缓存流可以创建 BufferedOutputStream 包装一下 OutputStream。 这个 OutputStream 需要手动关闭。 除了关闭输出流，还还需对 Editor 设置结果。如果写入操作和相关业务成功了，缓存文件有效，则调用 Editor.commit() 方法表示缓存写入成功。如果写入操作或相关业务失败了，缓存文件无效，则调用 Editor.abort() 来还原为未获取 Editor 之前的状态。 线程安全和一致性 DiskLruCache 管理多个 Entry（key-values），因此锁粒度应该是 Entry 级别的。\nget 和 edit 方法都是同步方法，保证内部的 Entry Map 的安全访问，是保证线程安全的第一步。\nget 和 edit 方法都返回一个对象来关联某个 Entry\n对读取来说，允许多个对象同时读取，不需要加锁 对写入来说，edit 方法内部保证不会有两个 Editor 同时关联一个 Entry。直接利用方法本身的锁就达到了目的。 可以同时读写一个 Entry，读和写不互相影响，读的是快照，写是原子操作。\n读取方法 get 返回后，就像返回值类型 Snapshot 的词义暗示的那样，它是一个快照对象，再对这个 Entry 进行任何操作都不会影响快照对象，快照对象在返回的时候就固定了，关联的输入流也一样。 完成一次写入必须调用 commit 方法，commit 方法是原子操作，多个 value 的修改要么同时不可见，要么同时可见。 注意 缓存空间的大小限制并不是特别精确，体现在并不一定及时删除应该删除的缓存文件，大小的计算也不包括内部文件以及文件系统的额外消耗。对空间敏感的使用者应该设置一个保守的大小。 open 方法的 appVersion 其实不必是应用的 version code。因为 appVersion 属性的主要作用是在升级app后清空缓存文件。DiskLruCache 这样做的原因是假定 app 的升级会导致缓存数据与新代码不兼容，可以说这是一种保守的策略。如果你能分辨出是否有不兼容问题，那么就可以随意定制 appVersion 这个参数，减少不必要的全局删除。如果不可能出现不兼容问题，那么就直接设置为一个固定值就可以了。 key 必须 match 正则表达式 [a-z0-9_-]{1,64}，在实际使用中，可以用 md5 的方法将 url 转换为符合条件的字符串。 缓存目录必须只能用于 DiskLruCache 缓存，不能再用作别的目的，因为 DiskLruCache 可能会删除或覆盖其中的文件。 不要多进程使用同一个缓存目录，可能会发生错误。 实现原理 DiskLruCache 内部使用一个 journal 文件来记录和管理缓存文件。文件内容大概长这样：\nlibcore.io.DiskLruCache\r1\r100\r2\rCLEAN 3400330d1dfc7f3f7f4b8d4d803dfcf6 832 21054\rDIRTY 335c4c6028171cfddfbaae1a9c313c52\rCLEAN 335c4c6028171cfddfbaae1a9c313c52 3934 2342\rREMOVE 335c4c6028171cfddfbaae1a9c313c52\rDIRTY 1ab96a171faeeee38496d8b330771a7a\rCLEAN 1ab96a171faeeee38496d8b330771a7a 1600 234\rREAD 335c4c6028171cfddfbaae1a9c313c52\rREAD 3400330d1dfc7f3f7f4b8d4d803dfcf6 journal 文件记录了一些元信息，比如版本号什么的。\njournal 文件还记录了每个 Entry 的数据，有四种状态：\nDIRTY：表示正在写入 CLEAN：表示就绪，可以读取到最新的修改了 REMOVE：表示被删除了 READ：表示正在读取 Entry 数据并不是在记录的位置“原地”修改，而是不停地添加新的状态到文件末尾，只有读取到最新的一条 Entry 相关的记录才能知道它的最新状态。随着操作越来越多，DiskLruCache 也会执行压缩，删除之前的状态。\n","pubDate":"2022-06-10","title":"Android-DiskLruCache"},{"link":"http://rendongwei.cn/posts/android/android-gson/","plain":"什么是Gson Gson 是一个Java库，可用于将Java对象转换为它们的Json 表示形式。它还可以用于将Json 字符串转换为等效的Java对象。Json 的解析和生成的方式很多，在 Android 平台上最常用的类库有 Gson 和 FastJson 两种，这里要介绍的是 Gson。\nGson 的 GitHub主页点击这里：Gson\n如何下载 Gradle:\n1 2 3 dependencies { implementation \u0026#39;com.google.code.gson:gson:2.8.9\u0026#39; } Json的生成 1 Gson().toJson(any) Json的解析 类 1 val user : User = Gson().fromJson(json,User::class) 复杂类型 1 val map : Map\u0026lt;String , Any\u0026gt; = Gson().fromJson(json,object : TypeToken\u0026lt;Map\u0026lt;String , Any\u0026gt;\u0026gt;() {}.type) Json的注解 1.自定义字段的名字 1 2 @SerializedName(\u0026#34;w\u0026#34;) var width:Int? = null 这个注解可以用来自定义序列化和反序列化过程中字段的名字。 以上面为例，当序列化的时候，会把Java bean中的字段width存储成w，在反序列化的时候会把Json的w这个key反序列化到Java bean的width字段上。\n2.定义那些字段需要被序列化或者反序列化 注意，在Java中，所有用transient声明的字段，都不会被Gson序列化和反序列化\nGson提供了注解来分别的控制某一个字段是否需要被序列化或者反序列化。对序列化和反序列化分开控制。\n使用@Expose注解，我们可以对序列化和反序列化单独控制，该注解有两个值，分别是deserialize和serialize，比如如下的例子\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 class Account { // 声明该字段不参与反序列化 @Expose(deserialize = false) var accountNumber : String? = null // 只要有一个字段使用了Expose注解，所有需要参与序列化和反序列化的字段都要有这个注解 // 因为这个注解要么不生效，如果生效的话，就只会对有Expose注解的字段进行处理。 @Expose var iban : String? = null // 声明该字段不参与序列化 @Expose(serialize = false) var owner : String? = null // 声明该字段序列化和反序列化都不参与 @Expose(serialize = false, deserialize = false) var address : String? = null var pin : String? = null } 要使该注解生效，必须对Gson进行配置，如下\n1 2 3 val builder : GsonBuilder = GsonBuilder() builder.excludeFieldsWithoutExposeAnnotation() val gson : Gson = builder.create() 如果我们不对Gson进行配置的话，该注解就不会生效，这样就会默认所有的字段都会被序列化和反序列化。\n通过对Gson进行配置，只有带有Expose注解的字段才会被Gson进行序列化或者反序列化。\n3.对Java Bean进行版本控制，这个使用的很少，比如 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 class SoccerPlayer { var name : String? = null //表明这个属性是1.2版本之后才加入的 @Since(1.2) var shirtNumber : Int? = null //表明这个属性是在0.9版本上已经被移出了 @Until(0.9) var country : String? = null var teamName : String? = null } 和Expose一样，要使用这两个注解，也需要对Gson进行配置，如下\n1 2 3 4 5 val builder : GsonBuilder = GsonBuilder() //在这里，我们定义版本是1.0，由于shirtNumber在1.2才加入，所以不生效 //country在0.9被移除，所以也不生效 builder.setVersion(1.0) val gson : Gson = builder.create() ","pubDate":"2022-06-08","title":"Android-Gson"},{"link":"http://rendongwei.cn/posts/android/android-room/","plain":"前言 room是官方推出的数据库映射框架。在没有room之前，比较出名的就是greendao库。既然官方都出了，还是用官方的吧。 使用room或者然后第三方框架，最好使用android 4.2以及之后的版本。因为这些新版本支持Database Inspector功能。也就是直接查看数据库的功能，以前的版本只能导出查看非常的麻烦。\n可以通过View-\u0026gt;Tool Window-\u0026gt;Database Inspector打开这个功能。 在一些新版本中，这个功能被移动到App Inspection里面。 同时需要SDK26及以上版本。\n一、添加依赖 1 2 3 4 5 6 7 8 def room_version=\u0026#34;2.4.2\u0026#34; implementation \u0026#34;androidx.room:room-runtime:$room_version\u0026#34; annotationProcessor \u0026#34;androidx.room:room-compiler:$room_version\u0026#34; //implementation \u0026#34;androidx.room:room-rxjava2:$room_version\u0026#34; //implementation \u0026#34;androidx.room:room-rxjava3:$room_version\u0026#34; //implementation \u0026#34;androidx.room:room-guava:$room_version\u0026#34; //testImplementation \u0026#34;androidx.room:room-testing:$room_version\u0026#34; //implementation \u0026#34;androidx.room:room-paging:2.5.0-alpha01\u0026#34; 二、创建数据库 1. 创建映射实体类 创建实体类，这个实体类就是数据库映射的接受类，对应的是数据库的user表，可以将数据库的表结构映射成Bean。使用注解标记相应的功能，通过名字就可以非常清楚的知道。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 // 表结构实体 @Entity class User { // 主键 @PrimaryKey var uid : Int? = null // 列/字段信息 @ColumnInfo(name = \u0026#34;first_name\u0026#34;) var firstName : String? = null // 列/字段信息 @ColumnInfo(name = \u0026#34;last_name\u0026#34;) var lastName : String? = null } 2.创建Dao接口 创建我们的Dao接口，这种实现方式和Retrofit是非常相似的。其实最感觉的就是SQL语句。这里我们先只关系getAll这个方法就行，语句是最简单的SELECT * FROM user。 对应的注解也是非常容易理解,分别对应增删改查。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 interface UserDao { // 查询 @Query(\u0026#34;SELECT * FROM user\u0026#34;) fun getAll() : MutableList\u0026lt;User\u0026gt; // 条件查询 @Query(\u0026#34;SELECT * FROM user WHERE uid IN (:userIds)\u0026#34;) fun getUserByIds(userIds : IntArray) : MutableList\u0026lt;User\u0026gt; // 条件查询 @Query(\u0026#34;SELECT * FROM user WHERE first_name LIKE :first AND last_name LIKE :last LIMIT 1\u0026#34;) fun getUserByName(first : String , last : String) : User // 插入 @Insert fun insertAll(vararg users : User) // 删除 @DELETE fun delete(user : User) } 3.创建数据库抽象接口 需要继承RoomDatabase，通过@Database指定需要创建的表。还可以指定版本。\n1 2 3 4 @Database(entities = {User::class} , version = 1) abstract class AppDatabase : RoomDatabase { abstract fun userDao() : UserDao } 我们发现这个我们自己定义的AppDatabase还是抽象类，因为她的实现需要移除在Activity或者Fragment里面实现。通过下面的代码创建真正的实现类。到这一步，数据库，表和UserDao都已经创建好了，通过AppDatabase的userDao方法，我们就可以获取到UserDao的实现。然后就可以直接调用对应的方法实现增删改查。\n1 val db : AppDatabase = Room.databaseBuilder(applicationContext,AppDatabase::class,\u0026#34;app.db\u0026#34;).build() 下面是完整的测试代码，我们需要创建一个协程。我们插入两条数据到user表中。\n1 2 3 4 5 6 7 8 9 GlobalScope.launch { val db : AppDatabase = Room.databaseBuilder(applicationContext,AppDatabase::class,\u0026#34;app.db\u0026#34;).build() val userDao = db.userDao() val user = User(1,\u0026#34;Tom\u0026#34;,\u0026#34;Cat\u0026#34;) val user1 = User(2,\u0026#34;Tom\u0026#34;,\u0026#34;Cruise\u0026#34;) userDao.insertAll(user,user1) val users : MutableList\u0026lt;User\u0026gt; = userDao.getAll() Log.d(\u0026#34;tag\u0026#34;,\u0026#34;users : $users\u0026#34;) } 三、Room的增删改查实现和细节 在数据库操作中其实最重要的是SQL语句，别的操作反而是次要的。\n1.插入操作 使用@Insert注解声明的Dao接口方法。\n下面的代码分别可以插入一个和插入多条数据，只需要传入相应的User对象。这种方式是最常用的。\n1 2 3 4 5 @Insert fun insert(user : User) @Insert fun insertAll(vararg users : User) 这种方式是典型的数据库映射，也是room的这种ORM的精髓。\n2.删除操作 和插入操作类似。可以删除一条数据或者根据条件删除多条数据。\n1 2 3 4 5 @DELETE fun delete(user : User) @Query(\u0026#34;DELETE FROM user WHERE uid \u0026gt; 0\u0026#34;) fun deleteAll() 3.查询操作 查询专门指SELECT语句，而不是@Query注解，这个注解可以做很多事情，前面我们看到，这个注解就是用来执行SQL语句的。\n1 2 @Query fun getAll() : MutableList\u0026lt;User\u0026gt; 4.更新操作 可以通过room提供的@Update注解来实现，当然也可以通过@Query直接执行SQL语句。\n1 2 3 4 5 @Update fun update(user : User) @Query(\u0026#34;UPDATE user SET last_name = :lastName WHERE first_name = :firstName\u0026#34;) fun updateOne(firstName : String , lastName : String) ","pubDate":"2022-06-07","title":"Android-Room"},{"link":"http://rendongwei.cn/posts/android/android-glide/","plain":"前言 Glide是一个快速高效的Android图片加载库，注重于平滑的滚动。统一了显示本地图片和网络图片的接口。\n使用步骤 1.添加Glide库的依赖： 1 2 3 implementation \u0026#39;com.github.bumptech.glide:glide:4.9.0\u0026#39; annotationProcessor \u0026#39;com.github.bumptech.glide:compiler:4.9.0\u0026#39; annotationProcessor \u0026#39;androidx.annotation:annotation:1.1.0\u0026#39; 2.添加权限 1 2 3 4 \u0026lt;uses-permission android:name=\u0026#34;android.permission.INTERNET\u0026#34;/\u0026gt; \u0026lt;uses-permission android:name=\u0026#34;android.permission.ACCESS_NETWORK_STATE\u0026#34;/\u0026gt; \u0026lt;uses-permission android:name=\u0026#34;android.permission.READ_EXTERNAL_STORAGE\u0026#34; /\u0026gt; \u0026lt;uses-permission android:name=\u0026#34;android.permission.WRITE_EXTERNAL_STORAGE\u0026#34; /\u0026gt; 3.初步使用 1 2 3 4 val url = \u0026#34;http://host/image.png\u0026#34; Glide.with(context) .load(url) .into(imageView) 4.转换 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 val options = RequestOptions() // 变换显示样式 .centerCrop() // 请求时占位 .placeholder(R.mipmap.loading) // 请求失败 .error(R.mipmap.error) // 请求为空的时候 .fallback(R.mipmap.empty) val url = \u0026#34;http://host/image.png\u0026#34; Glide.with(context) .load(url) .apply(options) .into(imageView) 5.缓存 默认情况下，Glide会再开始一个新的图片请求之前检查以下多级的缓存:\n活动资源(Active Resources) : 现在是否有另一个View正在展示这张图片 内存缓存(Memory Cache) : 该图片是否最近被加载过并仍存在于内存 资源类型(Resources) : 该图片是否之前曾被解码、转换并写入过磁盘缓存 数据来源(Data) : 构建这个图片的资源是否之前有被写入过文件缓存 内存缓存 通过skipMemoryCache(true)可以设置不进行内存缓存\n磁盘缓存 通过diskCacheStrategy(DiskCacheStrategy)设置缓存策略\n磁盘缓存策略 DiskCacheStrategy.ALL 既缓存原图又缓存处理图 DiskCacheStrategy.NONE 什么都不缓存 DiskCacheStrategy.SOURCE 只缓存原图 DiskCacheStrategy.RESULT 只缓存处理图 清除内存缓存 1 Glide.with(context).clearMemory() 清除磁盘缓存\n1 2 3 GlobalScope.launch { Glide.with(context).clearDiskCache() } 清除磁盘缓存需要子线程运行\n使用缩略图 1 2 3 4 5 6 val url = \u0026#34;http://host/image.png\u0026#34; Glide.with(context) .load(url) // 缩略图大小未原来的1/10 .thumbnail(0.1f) .into(imageView) 使用Target 1 2 3 4 5 6 7 8 9 val url = \u0026#34;http://host/image.png\u0026#34; val target = object : SimpleTarget\u0026lt;Bitmap\u0026gt;() { override fun onResourceReady(resource: Bitmap, transition :Transition\u0026lt;in Bitmap\u0026gt;?) { imageview.setImageBitmap(resource) } } Glide.with(context) .load(url) .into(target) ","pubDate":"2022-06-04","title":"Android-Glide"},{"link":"http://rendongwei.cn/posts/android/android-retrofit/","plain":"前言 Retrofit 是一个 RESTful 的 HTTP 网络请求框架的封装，网络请求的工作本质上是 OkHttp 完成，而 Retrofit 仅负责 网络请求接口的封装\n使用步骤 1.添加Retrofit库的依赖： 1 2 3 4 implementation \u0026#39;com.squareup.retrofit2:retrofit:2.0.2\u0026#39; implementation \u0026#39;com.squareup.retrofit2:converter-gson:2.0.2\u0026#39; implementation \u0026#39;com.google.code.gson:gson:2.8.5\u0026#39; implementation \u0026#39;com.squareup.retrofit2:adapter-rxjava:2.0.2\u0026#39; 后面三个是可选的，分别是数据解析器和gson，以及rxjava支持的依赖\n2.创建用于描述网络请求的接口 Retrofit将 Http请求 抽象成 kotlin接口：采用 注解 描述网络请求参数 和配置网络请求参数\n1 2 3 4 interface ApiSerivce{ @GET(\u0026#34;/api/call\u0026#34;) fun getCall(@Query(\u0026#34;name\u0026#34;) name : String) : Call\u0026lt;String\u0026gt; } 3.创建Retrofit实例 1 2 3 4 5 val retrofit = Retrofit.Builder() .baseUrl(\u0026#34;http://api.xxx.com\u0026#34;) .addConverterFactory(GsonConverterFactory.create()) .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) .build() 4.发送请求 请求分为同步请求和异步请求\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 val service = retrofit.create(ApiService::class) val call = service.getCall(\u0026#34;张**\u0026#34;) // 同步请求 try{ val response : Response\u0026lt;String\u0026gt; = call.execute() val reuslt = response.body() }catch(e:Exception){ } // 异步请求 call.enqueue(object : CallBack\u0026lt;String\u0026gt;{ @Override fun onResponse(call : Call\u0026lt;String\u0026gt; , response : Response\u0026lt;String\u0026gt;){ val reuslt = response.body() } fun onError(call : Call\u0026lt;String\u0026gt; , throwable : Throwable){ } }) response.body()就是Reception对象，网络请求的完整 Url =在创建Retrofit实例时通过.baseUrl()设置 +网络请求接口的注解设置（下面称 “path“ ） 整合的规则如下：\n类型 具体使用 path = 完整的Url Url = \u0026ldquo;http://host:port/api/login\u0026rdquo; path = \u0026ldquo;http://host:port/api/login\u0026rdquo;\nbaseUrl = 不设置 path = 绝对路径 Url = \u0026ldquo;http://host:port/api/login\u0026rdquo;\npath = \u0026ldquo;/login\u0026rdquo;\nbaseUrl = \u0026ldquo;http://host:port/api/\u0026rdquo; path = 相对路径\nbaseUrl = 目录形式 Url = \u0026ldquo;http://host:port/api/v1/login\u0026rdquo; path = \u0026ldquo;login\u0026rdquo;\nbaseUrl = \u0026ldquo;http://host:port/api/v1\u0026rdquo; path = 相对路径\nbaseUrl = 文件形式 Url = \u0026ldquo;http://host:port/api/v1/login\u0026rdquo; path = \u0026ldquo;login\u0026rdquo;\nbaseUrl = \u0026ldquo;http://host:port/api/v1\u0026rdquo; 注解 上面我们用了@GET注解来发送Get请求，Retrofit还提供了很多其他的注解类型\n网络请求方法 @GET 、 @POST 、 @PUT 、@DELETE 、@PATH 、@HEAD 、@OPTIONS 、@HTTP\n标记类 @FormUrlEncoded 、@Multipart 、@Streaming\n网络请求参数 @Header 、@headers 、@URL 、@Body 、@Path 、@Field 、@FieldMap 、@Part 、@PartMap 、@Query 、@QueryMap\n第一类 : 网络请求方法 @GET、@POST、@PUT、@DELETE、@HEAD分别对应 HTTP中的网络请求方式\n@HTTP替换@GET、@POST、@PUT、@DELETE、@HEAD注解的作用 及 更多功能拓展\n具体使用：通过属性method、path、hasBody进行设置\n1 2 3 4 5 6 7 8 9 interface ApiService{ /** * method : 网络请求方法(区分大小写) * path : 网络请求地址路径 * hasBody : 是否有请求体 */ @HTTP(method = \u0026#34;GET\u0026#34; , path = \u0026#34;blog/{id}\u0026#34; , hasBody = false) fun getCall(@Path(\u0026#34;id\u0026#34;) id : String) : Call\u0026lt;String\u0026gt; } 第二类 : 标记 @FormUrlEncoded\n表示发送form-encoded的数据，每个键值对需要用@Filed来注解键名，随后的对象需要提供值。\n@Multipart\n表示发送 form-encoded 的数据（适用于 有文件 上传的场景），每个键值对需要用@Part来注解键名，随后的对象需要提供值。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 interface ApiService{ /** * 表明是一个表单格式的请求（Content-Type:application/x-www-form-urlencoded） * \u0026lt;code\u0026gt;Field(\u0026#34;name\u0026#34;)\u0026lt;/code\u0026gt; 表示将后面的 \u0026lt;code\u0026gt;String name\u0026lt;/code\u0026gt; */ @POST(\u0026#34;/form\u0026#34;) @FormUrlEncoded fun test(@Field(\u0026#34;name\u0026#34;) name : String) : Call\u0026lt;String\u0026gt; /** * Part后面支持三种类型，RequestBody、MultipartBody.Part 、任意类型 * 除 MultipartBody.Part以外，其它类型都必须带上表单字段 (MultipartBody.Part 中已经包含了表单字段的信息) */ @POST(\u0026#34;/form\u0026#34;) @Multpart fun test(@Part(\u0026#34;name\u0026#34;) name : RequestBody) : Call\u0026lt;String\u0026gt; } 第三类 : 网络请求参数 注解名称 解释 @Headers 添加请求头 @Header 添加不固定值的Header @Body 用于非表单请求体 @Field 向Post表单传入键值对 @FieldMap 向Post表单传入键值对 @Part 用于表单字段，适用于有文件上传的情况 @PartMap 用于表单字段，适用于有文件上传的情况 @Query 用于表单字段，功能同@Field@FieldMap,区别是一个体现在URL上，一个在请求体上 @QueryMap 用于表单字段，功能同@Field@FieldMap,区别是一个体现在URL上，一个在请求体上 @Path URL缺省值 @URL URL设置 1.@Header \u0026amp; @Headers 添加请求头 \u0026amp;添加不固定的请求头\n1 2 3 4 5 6 7 8 // @Header @GET(\u0026#34;/user\u0026#34;) fun getUser(@Header(\u0026#34;Authorization\u0026#34;) authorization : String) : Call\u0026lt;User\u0026gt; // @Headers @GET(\u0026#34;/user\u0026#34;) @Headers(\u0026#34;Authorization : authorization\u0026#34;) fun getUser() : Call\u0026lt;User\u0026gt; 以上的效果是一致的\n区别在于使用场景和使用方式\n使用场景：@Header用于添加不固定的请求头，@Headers用于添加固定的请求头 使用方式：@Header作用于方法的参数；@Headers作用于方法 2.@Body 以 Post方式 传递 自定义数据类型 给服务器,如果提交的是一个Map，那么作用相当于 @Field,不过Map要经过 FormBody.Builder 类处理成为符合 OkHttp格式的表单，如：\n1 2 3 4 5 6 7 8 // @Body @POST(\u0026#34;/addUser\u0026#34;) fun addUser(@Body body : FormBody) : Call\u0026lt;String\u0026gt; // body val builder = FormBody.Builder() builder.add(\u0026#34;key\u0026#34;,\u0026#34;value\u0026#34;) val body = builder.build() 3.@Field \u0026amp; @FieldMap 发送 Post请求 时提交请求的表单字段,与 @FormUrlEncoded 注解配合使用\n1 2 3 4 5 6 7 8 9 // @Field @POST(\u0026#34;/addUser\u0026#34;) @FormUrlEncoded fun addUser(@Field(\u0026#34;name\u0026#34;) name : String , @Field(\u0026#34;age\u0026#34;) age : int) : Call\u0026lt;String\u0026gt; // @FieldMap @POST(\u0026#34;/addUser\u0026#34;) @FormUrlEncoded fun addUser(@FieldMap map : Map\u0026lt;String , Any?\u0026gt;) : Call\u0026lt;String\u0026gt; 4.@Part \u0026amp; @PartMap 发送 Post请求 时提交请求的表单字段,与@Field的区别：功能相同，但携带的参数类型更加丰富，包括数据流，所以适用于 有文件上传 的场景,与 @Multipart 注解配合使用\n1 2 3 4 5 6 7 8 9 // @Part @POST(\u0026#34;/form\u0026#34;) @Multipart fun uploadFile(@Part(\u0026#34;name\u0026#34;) name : RequestBody , @Part file : MultipartBody.Part) : Call\u0026lt;String\u0026gt; // @PartMap @POST(\u0026#34;/form\u0026#34;) @Multipart fun uploadFile(@PartMap map : Map\u0026lt;String , RequestBody?\u0026gt; , @Part file : MultipartBody.Part) : Call\u0026lt;String\u0026gt; 5.@Query \u0026amp; QueryMap 用于 @GET 方法的查询参数（Query = Url 中 ‘?’ 后面的 key-value）\n1 2 3 4 5 6 7 // @Query @GET(\u0026#34;/getUser\u0026#34;) fun getUser(@Query(\u0026#34;id\u0026#34;) id : String) : Call\u0026lt;User\u0026gt; // @QueryMap @GET(\u0026#34;/getUser\u0026#34;) fun getUser(@QueryMap map : Map\u0026lt;String , Any?\u0026gt;) : Call\u0026lt;User\u0026gt; 6.@Path URL地址的缺省值\n1 2 @GET(\u0026#34;/user/info/{id}\u0026#34;) fun getUser(@Path(\u0026#34;id\u0026#34;) id : String) : Call\u0026lt;User\u0026gt; 7.Url 直接传入一个请求的 URL变量 用于URL设置\n1 2 @GET fun getUser(@Url url : String , @Query(\u0026#34;id\u0026#34;) id : String) : Call\u0026lt;User\u0026gt; ","pubDate":"2022-06-02","title":"Android-Retrofit"}];
+</script>
+
+
+
+
+
+    </body>
+</html>
+
