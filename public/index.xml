@@ -6,7 +6,25 @@
     <description>Recent content on Don的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go-空结构体的应用与实现原理</title>
+      <link>http://rendongwei.cn/posts/go/go-%E7%A9%BA%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E5%BA%94%E7%94%A8%E4%B8%8E%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Thu, 17 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/go/go-%E7%A9%BA%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E5%BA%94%E7%94%A8%E4%B8%8E%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</guid>
+      <description>空结构体的应用与实现原理 一、空结构体介绍 首先来看看空结构体是什么；空结构体也是结构体类型，具有结构体</description>
+    </item>
+    
+    <item>
+      <title>Go-语法糖讲解</title>
+      <link>http://rendongwei.cn/posts/go/go-%E8%AF%AD%E6%B3%95%E7%B3%96%E8%AE%B2%E8%A7%A3/</link>
+      <pubDate>Thu, 17 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/go/go-%E8%AF%AD%E6%B3%95%E7%B3%96%E8%AE%B2%E8%A7%A3/</guid>
+      <description>语法糖讲解 一、变量声明 1.变量 变量可以通过变量名访问。 Go 语言变量名由字母、数字、下划线组成，其中首个</description>
+    </item>
+    
     <item>
       <title>Go-Json</title>
       <link>http://rendongwei.cn/posts/go/go-json/</link>
