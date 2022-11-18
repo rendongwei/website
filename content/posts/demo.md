@@ -2,9 +2,9 @@
 title: "demo"
 date: "2022-11-10"
 categories:
-    - "Kotlin"
+    - "Go"
 tags:
-    - "Kotlin"
+    - "Go"
 toc: true
 indent: false
 original: true
