@@ -6,7 +6,16 @@
     <description>Recent content in Go on Don的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/categories/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/categories/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go-读取文件10种的方法</title>
+      <link>http://rendongwei.cn/posts/go/go-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B610%E7%A7%8D%E7%9A%84%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/go/go-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B610%E7%A7%8D%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
+      <description>一、整个文件读入内存 直接将数据直接读取入内存，是效率最高的一种方式，但此种方式，仅适用于小文件，对于</description>
+    </item>
+    
     <item>
       <title>Go-空结构体的应用与实现原理</title>
       <link>http://rendongwei.cn/posts/go/go-%E7%A9%BA%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E5%BA%94%E7%94%A8%E4%B8%8E%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</link>
