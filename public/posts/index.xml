@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Don的小窝</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 18 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://rendongwei.cn/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go-unsafe.Pointer与uintptr</title>
+      <link>http://rendongwei.cn/posts/go/go-unsafe.pointer%E4%B8%8Euintptr/</link>
+      <pubDate>Mon, 21 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://rendongwei.cn/posts/go/go-unsafe.pointer%E4%B8%8Euintptr/</guid>
+      <description>一、查看普通指针类型 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 type Admin struct { Name string Age int }</description>
+    </item>
+    
     <item>
       <title>Go-读取文件10种的方法</title>
       <link>http://rendongwei.cn/posts/go/go-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B610%E7%A7%8D%E7%9A%84%E6%96%B9%E6%B3%95/</link>
