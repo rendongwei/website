@@ -10,7 +10,7 @@ draft: false
 
 手机号 : 15063080813
 
-邮箱 : 86930007@qq.com
+邮箱 : i@rendongwei.cn
 
 github : [http://github.com/rendongwei](http://github.com/rendongwei)
 
