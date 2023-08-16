@@ -8,8 +8,6 @@ draft: false
 ---
 # 任东卫
 
-手机号 : 15063080813
-
 邮箱 : i@rendongwei.cn
 
 github : [http://github.com/rendongwei](http://github.com/rendongwei)
